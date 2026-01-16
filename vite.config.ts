@@ -4,9 +4,10 @@ import react from '@vitejs/plugin-react';
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [react()],
-  // Use relative paths for InfinityFree hosting (or './' for subdirectory)
+  // Use absolute paths for Cloudflare Pages (recommended)
   // For Firebase, you can use '/' (default) or './' (both work)
-  base: './', // Relative paths work for both Firebase and InfinityFree
+  // For InfinityFree subdirectory hosting, use './'
+  base: '/', // Absolute paths work best for Cloudflare Pages
   optimizeDeps: {
     exclude: ['lucide-react'],
   },

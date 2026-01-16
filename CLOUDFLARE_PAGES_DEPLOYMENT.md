@@ -58,10 +58,6 @@ git push -u origin main
 - **Build output directory:** `dist`
 - **Root directory:** `/` (leave as default)
 
-**Environment Variables (if needed):**
-- Click **"Add variable"** to add:
-  - `VITE_ELEVENLABS_API_KEY` = your API key
-  - `VITE_ELEVENLABS_VOICE_ID` = your voice ID
 
 ### Step 4: Deploy
 
@@ -82,7 +78,7 @@ This file is already created in the `public` folder. It ensures React Router wor
 
 ### 2. Update `vite.config.ts` (already configured)
 
-Your current config uses `base: './'` which works perfectly with Cloudflare Pages.
+Your config uses `base: '/'` which works perfectly with Cloudflare Pages. This ensures assets load correctly with absolute paths.
 
 ---
 
@@ -173,8 +169,80 @@ Cloudflare Pages **Free Plan** includes:
 
 ## 🐛 Troubleshooting
 
+### Issue: "Wrangler deploy error - Specify the path to the directory of assets"
+
+**This error occurs when Cloudflare Pages tries to use Wrangler CLI instead of Pages deployment.**
+
+**Solution 1: Use Cloudflare Pages Dashboard (Recommended)**
+1. **Don't use Wrangler CLI** - Use the Cloudflare Dashboard instead
+2. Go to [Cloudflare Dashboard](https://dash.cloudflare.com/) → **Workers & Pages** → **Pages**
+3. Click **"Create application"** → **"Connect to Git"**
+4. Select your repository and configure build settings
+5. Cloudflare Pages will handle deployment automatically
+
+**Solution 2: If you must use CLI, use Pages CLI (not Wrangler)**
+
+**⚠️ IMPORTANT: You must create the project in Cloudflare Dashboard FIRST!**
+
+1. **Create project in Dashboard:**
+   - Go to [Cloudflare Dashboard](https://dash.cloudflare.com/) → **Workers & Pages** → **Pages**
+   - Click **"Create application"** → **"Connect to Git"** OR **"Upload assets"**
+   - Set project name (e.g., `rehabserve-project`)
+   - Configure build settings if using Git
+
+2. **Then deploy via CLI:**
+```bash
+# Install Cloudflare Pages CLI
+npm install -g wrangler
+
+# Login to Cloudflare first
+npx wrangler login
+
+# Build your app first
+npm run build
+
+# Deploy using Pages command (NOT wrangler deploy)
+# Use --project-name flag (with a space, not equals sign)
+npx wrangler pages deploy dist --project-name your-project-name
+
+# Example:
+# npx wrangler pages deploy dist --project-name rehabserve-project
+```
+
+**Important:** 
+- The correct syntax is `--project-name your-project-name` (with a space)
+- NOT `--project-name=your-project-name` 
+- NOT `--your-project-name`
+- Project must exist in Cloudflare Dashboard first!
+
+**Solution 3: Check Build Settings in Dashboard**
+1. Go to your Cloudflare Pages project
+2. Click **"Settings"** → **"Builds & deployments"**
+3. Verify:
+   - **Build command:** `npm run build`
+   - **Build output directory:** `dist`
+   - **Root directory:** `/` (or leave empty)
+4. Make sure you're using **"Pages"** not **"Workers"**
+
+**Why this happens:**
+- You might have accidentally created a **Workers** project instead of **Pages** project
+- Or Cloudflare is detecting your project as a Worker instead of a static site
+- **Solution:** Delete the project and create a new **Pages** project (not Workers)
+
 ### Issue: "404 on page refresh"
 ✅ Fixed! The `public/_redirects` file handles SPA routing.
+
+### Issue: "Project not found" error
+
+**Error:** `Project not found. The specified project name does not match any of your existing projects.`
+
+**Solution:**
+1. Create the project in Cloudflare Dashboard first:
+   - Go to [Cloudflare Dashboard](https://dash.cloudflare.com/) → **Workers & Pages** → **Pages**
+   - Click **"Create application"** → Choose **"Upload assets"** or **"Connect to Git"**
+   - Enter your project name (e.g., `rehabserve-project`)
+   - Save the project
+2. Then deploy using CLI with the exact project name
 
 ### Issue: "Build fails"
 ```bash
@@ -182,7 +250,7 @@ Cloudflare Pages **Free Plan** includes:
 npm run build
 
 # Check that dist folder is created
-ls dist
+ls dist  # or dir dist on Windows
 ```
 
 ### Issue: "Environment variables not working"
@@ -192,6 +260,37 @@ ls dist
 
 ### Issue: "CORS errors with Google Sheets"
 ✅ Google Sheets API allows requests from any origin, so this shouldn't be an issue.
+
+### Issue: "Something went wrong - The application encountered an error"
+
+**This error page appears when the ErrorBoundary catches a JavaScript error.**
+
+**Common causes and solutions:**
+
+1. **Base path issue (most common):**
+   - Check `vite.config.ts` - should use `base: '/'` for Cloudflare Pages
+   - Rebuild: `npm run build`
+   - Redeploy
+
+2. **Google Sheets API error:**
+   - Open browser console (F12) to see the actual error
+   - Check if Google Sheet is publicly accessible
+   - Verify the SHEET_ID in `src/App.tsx` is correct
+
+3. **Missing assets:**
+   - Check browser console for 404 errors
+   - Verify all assets are in `dist` folder
+   - Check that `_redirects` file is in `public` folder (copied to `dist`)
+
+4. **Check browser console:**
+   - Open Developer Tools (F12)
+   - Go to Console tab
+   - Look for red error messages
+   - Share the error message for specific help
+
+5. **Clear cache and reload:**
+   - Hard refresh: `Ctrl+Shift+R` (Windows) or `Cmd+Shift+R` (Mac)
+   - Or use "Clear Session & Reload" button on error page
 
 ---
 
