@@ -1,5 +1,5 @@
 import React from 'react';
-import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend } from 'chart.js';
+import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, BarController, Title, Tooltip, Legend } from 'chart.js';
 import { Chart } from 'react-chartjs-2';
 import { CheckCircle2, AlertCircle, TrendingUp } from 'lucide-react';
 
@@ -8,6 +8,7 @@ ChartJS.register(
   CategoryScale,
   LinearScale,
   BarElement,
+  BarController,
   Title,
   Tooltip,
   Legend

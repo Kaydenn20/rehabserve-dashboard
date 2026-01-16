@@ -4,6 +4,7 @@ import {
   CategoryScale,
   LinearScale,
   BarElement,
+  BarController,
   Title,
   Tooltip,
   Legend
@@ -11,7 +12,7 @@ import {
 import { Chart } from 'react-chartjs-2';
 
 // Register Chart.js components
-ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
+ChartJS.register(CategoryScale, LinearScale, BarElement, BarController, Title, Tooltip, Legend);
 
 interface HorizontalBarChartProps {
   data: { label: string; value: string; current: number }[];
