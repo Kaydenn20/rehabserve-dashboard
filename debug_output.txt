@@ -1,0 +1,74 @@
+--- DEBUG: Latest Row ---
+Timestamp: Date(2025,8,4,20,20,38)
+1. What is your relationship with the trainee? / Apakah hubungan anda dengan pelatih?: Guardian / Penjaga
+2. What is your gender? / Apakah jantina anda?: Female / Perempuan
+3. What is your religion / Apakah agama anda?*: Others / Lain-lain
+4. What is your race? / Apakah bangsa anda?*: Malay
+5. What is your age? / Apakah umur anda?
+*: None
+6. Name of your village / town / Nama Kampung / Bandar (Negeri): sd
+7. What is your household income level (monthly)? / Berapakah pendapatan isi rumah anda (bulanan)? : RM2,501 - RM3,500
+8. What is your educational level / Apakah tahap pendidikan anda?*: Professional / Profesional
+9. What is your marital status? / Apakah status perkahwinan anda?*: Married / Sudah berkahwin
+10. What is your occupation? / Apakah pekerjaan anda?*: Student / Pelajar
+11. State your job / Nyatakan pekerjaan anda: sad
+12. What is the trainee's gender? / Apakah jantina pelatih?
+: Female / Perempuan
+13. Trainee's Age / Umur Pelatih: 23.0
+14. How is the trainee's health condition? / Bagaimanakah keadaan kesihatan pelatih?: Visually Impaired / Penglihatan
+15. Please specify / Sila nyatakan
+: None
+16. Trainee, how happy are you with the Centre? / Pelatih, berapa gembirakah anda dengan Pusat tersebut?: 5.0
+17. Health performance of the trainee before coming to CBR / Prestasi kesihatan pelatih sebelum datang ke PDK:: 8.0
+18. Health performance of the trainee after coming to CBR / Prestasi kesihatan pelatih selepas datang ke PDK:: 3.0
+19. Manage myself of the trainee before coming to CBR / Urus diri pelatih sebelum datang ke PDK:: 9.0
+20. Manage myself of the trainee after coming to CBR / Urus diri pelatih selepas datang ke PDK:: 2.0
+1. Constantly check the level of commitment to serve the trainees' needs. / Sentiasa periksa tahap komitmen untuk memenuhi keperluan pelatih.: 1.0
+2. Care for the trainees based on a good understanding of the trainees' needs. / Menjaga pelatih berdasarkan pemahaman yang baik terhadap keperluan pelatih.: 7.0
+3. Love and be patient with every trainee. / Menunjukkan kasih sayang dan bersabar dengan setiap pelatih.: 5.0
+4. Regularly understand the trainees' satisfaction. / Sentiasa memahami kepuasan pelatih.: 3.0
+5. Know the changes in the trainees' preferences. / Mengetahui perubahan pilihan pelatih.: 4.0
+6. Excellent after-training service for trainees. / Perkhidmatan selepas latihan yang cemerlang untuk pelatih.: 5.0
+7. The Rehabilitation Centre strives for service excellence. / Pusat pemulihan berusaha untuk kecemerlangan perkhidmatan. : 2.0
+8. The top management is committed to delivering excellent rehabilitation services. / Pengurusan atasan komited untuk memberikan perkhidmatan pemulihan yang cemerlang. : 7.0
+9. Systematically and regularly measures its service performance. / Mengukur prestasi perkhidmatan secara sistematik dan kerap.: 3.0
+10. Seriously monitors its rehabilitation service performance. / Memantau prestasi perkhidmatan pemulihan dengan serius.: 6.0
+11. Provide resources to enhance trainers' ability to provide excellent service. / Menyediakan sumber untuk meningkatkan keupayaan jurulatih untuk memberikan perkhidmatan yang cemerlang.*
+: 3.0
+12. Aiming for being an excellent CBR Centre. / Bertujuan untuk menjadi PDK yang cemerlang.: 7.0
+13. Respond quickly to competitors' actions that may threaten the Centre. / Bertindak balas dengan cepat kepada tindakan pesaing yang boleh mengancam pusat pemulihan: 2.0
+14. Continuously knowing the competitors to provide better service. / Sentiasa mengetahui pesaing untuk menyediakan perkhidmatan yang lebih baik.: 2.0
+15. The target for trainees that the Centre can serve better than its competitors. / Sasaran untuk pelatih bahawa pusat pemulihan tersebut dapat berkhidmat lebih baik daripada pesaingnya.: 5.0
+16. Always learn from other rehabilitation centres to care for the trainees. / Sentiasa belajar daripada pusat pemulihan lain untuk menjaga pelatih.: 1.0
+17. Always try to be different and better than other CBR Centres. / Sentiasa cuba untuk menjadi berbeza dan lebih baik dari Pusat Pemulihan Dalam Komuniti (PDK) yang lain.: 1.0
+18. Work with other CBR Centres and counterparts. / Bekerja dengan Pusat PDK lain dan rakan sejawat.: 7.0
+19. Invest in providing excellent services to the trainees (e.g., facilities). / Melabur dalam memberikan perkhidmatan terbaik kepada pelatih (contohnya, fasiliti).: 3.0
+20. Implement changes to care for the trainees in the long-term. / Melaksanakan perubahan untuk menjaga pelatih dalam jangka masa panjang.: 3.0
+21. Emphasise the Centre's long-term survival. / Menekankan kelangsungan jangka panjang pusat pemulihan.: 6.0
+22. Emphasise continuous improvement in managing its services/products. / Menekankan penambahbaikan berterusan dalam menguruskan perkhidmatan/produknya.: 3.0
+23. The Centre has long-term plans in service. / Pusat pemulihan mempunyai rancangan jangka panjang dalam perkhidmatan.: 5.0
+24. Consider serving the trainees well as a worthwhile long-term investment. / Mempertimbangkan untuk berkhidmat kepada pelatih sebagai pelaburan jangka panjang yang berbaloi.: 1.0
+25. The Centre consistently emphasises service excellence. / Pusat pemulihan sentiasa menekankan kecemerlangan perkhidmatan.: 7.0
+26. Generate income for sustainability of the Centre. / Menjana pendapatan untuk mengekalkan atau menyokong proses secara berterusan Pusat tersebut.: 4.0
+27. The employees communicate and "talk" about how to care for the trainees better. / Pekerja berkomunikasi dan "bercakap" tentang cara menjaga pelatih dengan lebih baik.: 6.0
+28. Trainee information is freely distributed in the Centre (e.g., notices). / Maklumat pelatih diedarkan di pusat pemulihan (contohnya, notis).: 2.0
+29. The employees of different departments in the Centre have good relationships. / Kakitangan pelbagai jabatan di pusat pemulihan mempunyai hubungan yang baik.: 5.0
+30. During any activity involving various departments, there is good coordination. / Aktiviti yang melibatkan semua kakitangan pusat pemulihan diselaraskan dengan baik.: 3.0
+31. There is good communication between the different departments/units in the Centre. / Komunikasi yang baik antara pelbagai jabatan/unit di pusat pemulihan.: 7.0
+32. Work with external organisations / Komunikasi yang baik antara pelbagai jabatan/unit di pusat pemulihan.: 3.0
+33. The employees of the Centre are well trained. / Pekerja di pusat pemulihan adalah terlatih.: 1.0
+34. Employees who interact with the trainees are always motivated or joyful. / Pekerja yang berinteraksi dengan pelatih sentiasa bermotivasi atau gembira.: 7.0
+35. The Centre have sufficient staff to deliver quality service. / Pusat pemulihan mempunyai kakitangan yang mencukupi untuk memberikan perkhidmatan yang berkualiti.: 6.0
+36. The Centre chooses suitable staff to interact or deal with the trainees. / Pusat pemulihan memilih kakitangan yang sesuai untuk berinteraksi atau berurusan dengan pelatih.: 5.0
+37. Motivate trainers to love and care for the trainers. / Memotivasikan jurulatih untuk mencari dan menjaga pelatih.: 4.0
+38. Encourage employees to have a good relationship with parents. / Menggalakkan pekerja untuk mempunyai hubungan yang baik dengan ibu bapa.: 2.0
+1. Overall, I am very satisfied with the Centre. / Secara keseluruhannya, saya sangat berpuas hati dengan Pusat tersebut.: 2.0
+2. The Centre provides excellent service to the trainees. / Pusat tersebut memberi perkhidmatan cemerlang kepada pelatih-pelatih.: 5.0
+3. The Centre provides excellent service to the parents/guardians. / Pusat tersebut memberi perkhidmatan cemerlang kepada ibubapa/penjaga.: 4.0
+4. I will continue to cooperate with the Centre. / Saya akan terus bekerjasama dengan Pusat tersebut.: 6.0
+5. I will recommend the Centre to others. / Saya akan cadangkan Pusat tersebut kepada orang lain.: 2.0
+6. Once I have come to a conclusion, I am not likely to change my mind. / Apabila says sudah membuat keputusan, besar kemungkinan saya tidak akan mengubah fikiran.: 5.0
+7. I do not change my mind easily. / Saya tidak mengubah fikiran dengan mudahnya.: 3.0
+8. My views are very consistent over time. / Pandangan saya sangat konsisten dari semasa ke semasa.: 5.0
+How can the Community-based Rehabilitation Centre’s service be improved to meet your child's specific needs and enhance the overall service experience? (Please give 3 suggestions). / 
+Bagaimanakah perkhidmatan Pusat Pemulihan Dalam Komuniti (PDK) dapat dipertingkatkan untuk memenuhi keperluan khusus anak anda dan meningkatkan pengalaman perkhidmatan secara keseluruhan? (Sila berikan 3 cadangan).: None
