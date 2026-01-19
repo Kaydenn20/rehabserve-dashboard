@@ -85,7 +85,7 @@ const QuestionBreakdown: React.FC<QuestionBreakdownProps> = ({
   aiSummary,
 }) => {
   const scorecardRef = useRef<HTMLDivElement | null>(null);
-  const [logoError, setLogoError] = useState(false);
+  const [showTextLogo, setShowTextLogo] = useState(true); // Default to text logo
 
   // Function to download PDF using browser's print functionality
   // This method uses the browser's native print-to-PDF which handles multi-page correctly
@@ -283,9 +283,9 @@ const QuestionBreakdown: React.FC<QuestionBreakdownProps> = ({
         <div ref={scorecardRef} data-scorecard="true" className="flex flex-col items-center">
       {/* Logo above the table */}
       <div className="flex justify-center w-full mb-4">
-        {logoError ? (
+        {showTextLogo ? (
           <div className="flex items-center gap-2">
-            <div className="bg-gradient-to-r from-[#CE1126] to-[#FCD106] text-white px-4 py-2 rounded-lg font-bold text-xl">
+            <div className="bg-gradient-to-r from-[#CE1126] to-[#FCD106] text-white px-4 py-2 rounded-lg font-bold text-xl shadow-md">
               RehabServE
             </div>
             <span className="text-gray-700 font-semibold text-lg">with AI</span>
@@ -295,9 +295,17 @@ const QuestionBreakdown: React.FC<QuestionBreakdownProps> = ({
             src="/RehabServELogo2.png"
             alt="RehabServE Logo"
             className="h-14"
-            onError={() => setLogoError(true)}
+            onError={() => setShowTextLogo(true)}
           />
         )}
+        {/* Preload check - if image exists, switch to it */}
+        <img
+          src="/RehabServELogo2.png"
+          alt=""
+          className="hidden"
+          onLoad={() => setShowTextLogo(false)}
+          onError={() => setShowTextLogo(true)}
+        />
       </div>
       {/* Header with Title */}
       <div className="mb-0" style={{ width: 'calc(3rem + 35rem + 5rem + 4rem)' }}>
