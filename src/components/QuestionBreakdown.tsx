@@ -86,7 +86,6 @@ const QuestionBreakdown: React.FC<QuestionBreakdownProps> = ({
 }) => {
   const scorecardRef = useRef<HTMLDivElement | null>(null);
   const [logoError, setLogoError] = useState(false);
-  const [logoError, setLogoError] = useState(false);
 
   // Function to download PDF using browser's print functionality
   // This method uses the browser's native print-to-PDF which handles multi-page correctly
