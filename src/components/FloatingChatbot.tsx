@@ -445,8 +445,12 @@ const FloatingChatbot: React.FC<FloatingChatbotProps> = ({
     if (avatarState === 'idle') {
       // Play idle video when in idle state
       const playIdleVideo = () => {
-        idleVideoRefClosed.current?.play().catch(err => console.error('Error playing idle video (closed):', err));
-        idleVideoRefHeader.current?.play().catch(err => console.error('Error playing idle video (header):', err));
+        idleVideoRefClosed.current?.play().catch(() => {
+          // Silently handle video play errors - video may not exist or be unsupported
+        });
+        idleVideoRefHeader.current?.play().catch(() => {
+          // Silently handle video play errors - video may not exist or be unsupported
+        });
       };
       // Small delay to ensure video element is in DOM
       const timeoutId = setTimeout(playIdleVideo, 50);
@@ -1225,7 +1229,14 @@ const FloatingChatbot: React.FC<FloatingChatbotProps> = ({
                       muted
                       playsInline
                       autoPlay
-                  className="w-[140px] h-[140px] rounded-full object-cover bg-transparent"
+                      onError={(e) => {
+                        // Silently handle video load errors
+                        const video = e.currentTarget;
+                        if (video) {
+                          video.style.display = 'none';
+                        }
+                      }}
+                      className="w-[140px] h-[140px] rounded-full object-cover bg-transparent"
                       style={{ border: 'none', outline: 'none' }}
                     />
                   ) : (
@@ -1378,7 +1389,14 @@ const FloatingChatbot: React.FC<FloatingChatbotProps> = ({
                     muted
                     playsInline
                     autoPlay
-                 className="w-[120px] h-[120px] rounded-full object-cover bg-transparent"
+                    onError={(e) => {
+                      // Silently handle video load errors
+                      const video = e.currentTarget;
+                      if (video) {
+                        video.style.display = 'none';
+                      }
+                    }}
+                    className="w-[120px] h-[120px] rounded-full object-cover bg-transparent"
                     style={{ border: 'none', outline: 'none' }}
                   />
                 ) : (

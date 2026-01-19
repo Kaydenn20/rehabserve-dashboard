@@ -1,16 +1,7 @@
 import React from 'react';
-import { Chart as ChartJS, RadialLinearScale, PointElement, LineElement, Filler, Tooltip, Legend } from 'chart.js';
+// Import chart.js/auto to automatically register all controllers including RadarController
+import 'chart.js/auto';
 import { Chart } from 'react-chartjs-2';
-
-// Register Chart.js components
-ChartJS.register(
-  RadialLinearScale,
-  PointElement,
-  LineElement,
-  Filler,
-  Tooltip,
-  Legend
-);
 
 interface RadarChartProps {
   data: { label: string; value: string; current: number }[];
