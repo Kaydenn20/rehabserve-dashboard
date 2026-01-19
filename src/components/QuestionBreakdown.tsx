@@ -1,4 +1,5 @@
 import React, { useRef, useState } from 'react';
+import rehabServeLogo from '../../RehabServELogo2.png';
 
 interface QuestionData {
   questionId: string;
@@ -85,7 +86,7 @@ const QuestionBreakdown: React.FC<QuestionBreakdownProps> = ({
   aiSummary,
 }) => {
   const scorecardRef = useRef<HTMLDivElement | null>(null);
-  const [showTextLogo, setShowTextLogo] = useState(true); // Default to text logo
+  const [showTextLogo, setShowTextLogo] = useState(false);
 
   // Function to download PDF using browser's print functionality
   // This method uses the browser's native print-to-PDF which handles multi-page correctly
@@ -292,20 +293,12 @@ const QuestionBreakdown: React.FC<QuestionBreakdownProps> = ({
           </div>
         ) : (
           <img
-            src="/RehabServELogo2.png"
+            src={rehabServeLogo}
             alt="RehabServE Logo"
             className="h-14"
             onError={() => setShowTextLogo(true)}
           />
         )}
-        {/* Preload check - if image exists, switch to it */}
-        <img
-          src="/RehabServELogo2.png"
-          alt=""
-          className="hidden"
-          onLoad={() => setShowTextLogo(false)}
-          onError={() => setShowTextLogo(true)}
-        />
       </div>
       {/* Header with Title */}
       <div className="mb-0" style={{ width: 'calc(3rem + 35rem + 5rem + 4rem)' }}>
