@@ -112,7 +112,7 @@ const Sidebar: React.FC<SidebarProps> = ({
       {!isOpen && (
         <button
           onClick={onToggle}
-          className="fixed top-4 left-4 z-40 lg:hidden bg-white/90 backdrop-blur-md border border-gray-200 rounded-xl p-3 shadow-lg hover:shadow-xl hover:bg-white transition-all active:scale-95"
+          className="fixed top-4 left-4 z-50 lg:hidden bg-white/90 backdrop-blur-md border border-gray-200 rounded-xl p-3 shadow-lg hover:shadow-xl hover:bg-white transition-all active:scale-95"
           aria-label="Open sidebar"
         >
           <Menu className="h-6 w-6 text-[#CE1126]" />

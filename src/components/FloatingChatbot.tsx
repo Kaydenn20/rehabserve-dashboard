@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect, useCallback } from 'react';
-import { X, Send, FileText } from 'lucide-react';
+import { X, Send } from 'lucide-react';
 
 interface Message {
   id: string;
@@ -131,27 +131,28 @@ const FloatingChatbot: React.FC<FloatingChatbotProps> = ({
   const getSuggestedQuestions = (): string[] => {
     if (!selectedRole) {
       return [
-        "What is overall performance?",
-        "Show me dimensions",
-        "How are things trending?",
-        "What needs improvement?"
+        "📊 See overall performance",
+        "📈 View performance trends",
+        "⚖️ Compare performance areas",
+        "💪 Strengths & areas to improve"
       ];
     }
 
     if (selectedRole === 'Staff') {
       return [
-        "Overall performance overview",
-        "Trend analysis",
-        "Dimensions comparison",
-        "Strengths and weaknesses",
-        "Improvement recommendations",
-        "How are KPIs calculated?",
-        "What is the best performing dimension?",
-        "What is the lowest performing dimension?",
-        "Show me all dimension scores",
-        "Explain the performance metrics",
-        "What actions should we take?",
-        "How to interpret the charts?"
+        "📊 See overall performance",
+        "📈 View performance trends",
+        "⚖️ Compare performance areas",
+        "💪 Strengths & areas to improve",
+        "🚀 How can we improve?",
+        "🔢 How are KPIs calculated?",
+        "📋 What do my scores mean?",
+        "⭐ What's our best area?",
+        "⚠️ What needs attention?",
+        "📊 Show all dimension scores",
+        "📉 How to interpret charts?",
+        "💡 What actions should we take?",
+        "❓ Help me understand metrics"
       ];
     }
     return [];
@@ -162,8 +163,10 @@ const FloatingChatbot: React.FC<FloatingChatbotProps> = ({
     setInputValue('');
     setShowSuggestions(false);
     
+    // Remove emoji and clean the question text for processing
+    const userMessageText = question.replace(/[📊📈⚖️💪🚀🔢📋⭐⚠️📉💡❓]/g, '').trim();
+    
     // Create and send the message directly
-    const userMessageText = question.trim();
     const userMessage: Message = {
       id: Date.now().toString(),
       text: userMessageText,
@@ -373,11 +376,17 @@ const FloatingChatbot: React.FC<FloatingChatbotProps> = ({
     window.speechSynthesis.speak(utterance);
   }, [speakWithElevenLabs]);
 
-  // Initialize chatbot - show suggestions without greeting message
+  // Initialize chatbot - show friendly greeting when opened
   useEffect(() => {
     if (isOpen && !isMinimized && messages.length === 0) {
-      // Don't add any initial message, just show suggestions
-      setMessages([]);
+      // Add friendly greeting message
+      const greetingMessage: Message = {
+        id: 'greeting-' + Date.now(),
+        text: "👋 Hi! I'm RehabBot.\n\nI can help you understand performance trends, strengths, and areas for improvement. What would you like to explore today?",
+        sender: 'bot',
+        timestamp: new Date(),
+      };
+      setMessages([greetingMessage]);
       setShowSuggestions(true);
     }
   }, [isOpen, isMinimized]);
@@ -666,15 +675,15 @@ const FloatingChatbot: React.FC<FloatingChatbotProps> = ({
     // === GREETINGS ===
     if (message.match(/^(hi|hello|hey|good morning|good afternoon|good evening)$/)) {
       if (selectedRole === 'Staff') {
-        baseResponse = `Hello! I'm RehabBot. I help analyze dashboard data, KPIs, and trends. How can I help?`;
+        baseResponse = `👋 Hi! I'm RehabBot.\n\nI can help you understand performance trends, strengths, and areas for improvement. What would you like to explore today?`;
         return formatForStaff(baseResponse);
       }
     }
 
     // === OVERALL PERFORMANCE / KPI OVERVIEW ===
-    if (message.match(/(overall|kpi|index|performance|score|how.*doing|current.*performance)/)) {
+    if (message.match(/(overall|kpi|index|performance|score|how.*doing|current.*performance|see.*overall|show.*overall)/)) {
       if (!kpiData) {
-        baseResponse = "I do not currently have access to performance data. Please ensure the dashboard is properly loaded and data is available.";
+        baseResponse = "Hmm, I couldn't fetch that data right now. Want me to try again? 😊\n\nMake sure your dashboard is properly loaded and data is available.";
         if (selectedRole === 'Staff') return formatForStaff(baseResponse);
         return baseResponse;
       }
@@ -686,34 +695,30 @@ const FloatingChatbot: React.FC<FloatingChatbotProps> = ({
       const rehabServEStatus = getRehabServEStatus(percentage);
       const trend = kpiData.trend;
       
-      // Determine trend status and interpretation based on role
-      let trendStatus: string;
-      let interpretation: string;
+      // Determine trend status and interpretation - more conversational
+      let trendText: string;
       
       if (trend > 0) {
-        trendStatus = `improving (+${trend.toFixed(2)}%)`;
-        interpretation = `This indicates positive developments in service delivery and organizational effectiveness. We recommend maintaining current practices while identifying opportunities for further enhancement.`;
+        trendText = `Great news! Performance is improving (+${trend.toFixed(2)}%). Keep up the excellent work!`;
       } else if (trend < 0) {
-        trendStatus = `declining (${trend.toFixed(2)}%)`;
-        interpretation = `This suggests certain areas of performance require attention. We recommend reviewing recent changes and identifying factors contributing to the decline.`;
+        trendText = `I noticed a slight drop in performance this month (${trend.toFixed(2)}%). The biggest change came from ${kpiData.lowestDimension?.name || 'various areas'}. Want me to explain further?`;
       } else {
-        trendStatus = 'stable';
-        interpretation = '';
+        trendText = 'Performance is stable.';
       }
       
-      baseResponse = `RehabServE Index: ${overallFormatted} (${percentageFormatted}%)\n\nStatus: ${rehabServEStatus}\n\nTrend: ${trendStatus}${interpretation ? `\n\n${interpretation}` : ''}`;
+      baseResponse = `Here's your overall performance:\n\n📊 RehabServE Index: ${overallFormatted} (${percentageFormatted}%)\n\nStatus: ${rehabServEStatus}\n\n${trendText}`;
       if (kpiData.lowestDimension) {
         const dimPercentage = scoreToPercentage(kpiData.lowestDimension.score);
-        baseResponse += `\n\nFocus area is ${kpiData.lowestDimension.name}, with a score of ${kpiData.lowestDimension.score.toFixed(2)} (${dimPercentage.toFixed(1)}%)`;
+        baseResponse += `\n\nThe area needing attention is ${kpiData.lowestDimension.name} at ${dimPercentage.toFixed(1)}%.`;
       }
-      baseResponse += `\n\nRespondents: ${kpiData.totalRespondents}`;
+      baseResponse += `\n\nBased on ${kpiData.totalRespondents} responses.`;
       return formatForStaff(baseResponse);
     }
 
     // === TREND ANALYSIS ===
-    if (message.match(/(trend|changing|improving|declining|getting better|getting worse|direction)/)) {
+    if (message.match(/(trend|changing|improving|declining|getting better|getting worse|direction|view.*trend)/)) {
       if (!kpiData) {
-        baseResponse = "Trend data is not currently available. Please verify your dashboard filters and ensure data is loaded.";
+        baseResponse = "Hmm, I couldn't fetch that data right now. Want me to try again? 😊\n\nMake sure your dashboard filters are set correctly and data is loaded.";
         if (selectedRole === 'Staff') return formatForStaff(baseResponse);
         return baseResponse;
       }
@@ -721,21 +726,21 @@ const FloatingChatbot: React.FC<FloatingChatbotProps> = ({
       const trend = kpiData.trend;
       
       if (trend > 0) {
-        baseResponse = `Trend: +${trend.toFixed(2)}%\n\nPerformance is improving. Maintain current strengths and address areas needing improvement.`;
+        baseResponse = `📈 Your performance is improving! The trend shows a +${trend.toFixed(2)}% increase.\n\nKeep maintaining your current strengths while looking for new opportunities to grow.`;
         return formatForStaff(baseResponse);
       } else if (trend < 0) {
-        baseResponse = `Trend: ${trend.toFixed(2)}%\n\nPerformance has decreased. Actions:\n\n1. Review lowest-scoring dimension\n2. Identify low-scoring questions\n3. Develop improvement plans`;
+        baseResponse = `I noticed a drop in performance this period (${trend.toFixed(2)}%). Here's what I recommend:\n\n1. Check out your lowest-scoring dimension\n2. Look at specific questions that need attention\n3. Let's create an improvement plan together`;
         return formatForStaff(baseResponse);
       } else {
-        baseResponse = `Trend: Stable`;
+        baseResponse = `Performance is staying stable. That's a good foundation to build from!`;
         return formatForStaff(baseResponse);
       }
     }
 
     // === DIMENSION ANALYSIS ===
-    if (message.match(/(dimension|dimensions|all.*scores|compare.*dimensions|which.*best|which.*worst)/)) {
+    if (message.match(/(dimension|dimensions|all.*scores|compare.*dimensions|which.*best|which.*worst|compare.*performance|performance.*areas|show.*dimension|all.*dimension)/)) {
       if (!dimAnalysis) {
-        baseResponse = "Dimension data is not currently available. Please ensure the dashboard is loaded with dimension data.";
+        baseResponse = "Hmm, I couldn't fetch that data right now. Want me to try again? 😊\n\nMake sure the dashboard is loaded with dimension data.";
         return formatResponse(baseResponse);
       }
 
@@ -747,7 +752,7 @@ const FloatingChatbot: React.FC<FloatingChatbotProps> = ({
         const description = getDimensionDescription(dim.name);
         const suggestion = getHighestDimensionSuggestions(dim.name);
         
-        baseResponse = `Highest Dimension: ${dim.name} (${dim.score.toFixed(2)})\n\nMeasures: ${description}\n\nKey strength. To maintain/enhance: ${suggestion}`;
+        baseResponse = `💪 Your strongest area is ${dim.name} (${dim.score.toFixed(2)}/7.0)\n\nThis measures ${description}\n\nThis is a real strength! To keep it strong: ${suggestion}`;
         return formatForStaff(baseResponse);
       }
       
@@ -758,30 +763,30 @@ const FloatingChatbot: React.FC<FloatingChatbotProps> = ({
         const lowestQuestions = getLowestScoringQuestions(3);
         
         const dimPercentage = scoreToPercentage(dim.score);
-        baseResponse = `Focus area is ${dim.name}, with a score of ${dim.score.toFixed(2)} (${dimPercentage.toFixed(1)}%)\n\nMeasures: ${description}\n\nNeeds improvement. Action: ${suggestion}`;
+        baseResponse = `The area needing attention is ${dim.name} (${dimPercentage.toFixed(1)}%)\n\nThis measures ${description}\n\nHere's what I suggest: ${suggestion}`;
         if (lowestQuestions.length > 0) {
-          baseResponse += `\n\nLowest-scoring items:\n`;
+          baseResponse += `\n\nSpecific items to focus on:\n`;
           lowestQuestions.forEach((q, index) => {
             const questionDesc = QUESTION_DESCRIPTIONS[q.questionId] || 'N/A';
-            baseResponse += `${index + 1}. ${q.questionId} (${q.score.toFixed(2)}): ${questionDesc}\n`;
+            baseResponse += `${index + 1}. ${q.questionId}: ${questionDesc}\n`;
           });
         }
         return formatForStaff(baseResponse);
       }
 
-      // Default: show all dimensions
-      baseResponse = `All Dimensions:\n`;
+      // Default: show all dimensions - more conversational
+      baseResponse = `Here's how all your performance areas compare:\n\n`;
       dimAnalysis.all.forEach((dim: any) => {
-        const status = dim.score >= 6.0 ? 'Excellent' : dim.score >= 5.0 ? 'Good' : 'Needs Attention';
-        baseResponse += `${dim.name}: ${dim.score.toFixed(2)} (${status})\n`;
+        const status = dim.score >= 6.0 ? '🌟 Excellent' : dim.score >= 5.0 ? '✅ Good' : '⚠️ Needs Attention';
+        baseResponse += `${dim.name}: ${dim.score.toFixed(2)}/7.0 - ${status}\n`;
       });
       return formatForStaff(baseResponse);
     }
 
     // === STRENGTHS AND WEAKNESSES ===
-    if (message.match(/(strength|weakness|strong|weak|best|worst|lowest|highest|excellent|poor)/)) {
+    if (message.match(/(strength|weakness|strong|weak|best|worst|lowest|highest|excellent|poor|areas.*improve|what.*best|what.*worst|best.*area|what.*needs.*attention|what.*attention)/)) {
       if (!kpiData || !dimAnalysis) {
-        baseResponse = "I require access to performance data to identify strengths and weaknesses. Please ensure your dashboard is loaded.";
+        baseResponse = "Hmm, I couldn't fetch that data right now. Want me to try again? 😊\n\nMake sure your dashboard is loaded with performance data.";
         return formatResponse(baseResponse);
       }
 
@@ -793,7 +798,7 @@ const FloatingChatbot: React.FC<FloatingChatbotProps> = ({
         const description = getDimensionDescription(dim.name);
         const suggestion = getHighestDimensionSuggestions(dim.name);
         
-        baseResponse = `Strength: ${dim.name} (${dim.score.toFixed(2)} / 7.0)\n\nMeasures: ${description}\n\nKey strength. To maintain/enhance: ${suggestion}`;
+        baseResponse = `💪 Your strength: ${dim.name} (${dim.score.toFixed(2)}/7.0)\n\nThis measures ${description}\n\nGreat job! To keep it strong: ${suggestion}`;
         return formatForStaff(baseResponse);
       }
       
@@ -803,81 +808,79 @@ const FloatingChatbot: React.FC<FloatingChatbotProps> = ({
         const suggestion = getDimensionSuggestions(dim.name);
         const lowestQuestions = getLowestScoringQuestions(3);
         
-        baseResponse = `Needs Improvement: ${dim.name} (${dim.score.toFixed(2)})\n\nMeasures: ${description}\n\nAction: ${suggestion}`;
+        baseResponse = `This area needs attention: ${dim.name} (${dim.score.toFixed(2)}/7.0)\n\nThis measures ${description}\n\nHere's what I suggest: ${suggestion}`;
         if (lowestQuestions.length > 0) {
-          baseResponse += `\n\nLowest-scoring items:\n`;
+          baseResponse += `\n\nSpecific items to focus on:\n`;
           lowestQuestions.forEach((q, index) => {
             const questionDesc = QUESTION_DESCRIPTIONS[q.questionId] || 'N/A';
-            baseResponse += `${index + 1}. ${q.questionId} (${q.score.toFixed(2)}): ${questionDesc}\n`;
+            baseResponse += `${index + 1}. ${q.questionId}: ${questionDesc}\n`;
           });
         }
         return formatForStaff(baseResponse);
       }
 
-      // Default fallback
-      if (kpiData.bestDimension) {
-        const dim = kpiData.bestDimension;
-        const description = getDimensionDescription(dim.name);
-        const suggestion = getHighestDimensionSuggestions(dim.name);
-        
-        baseResponse = `Strength: ${dim.name} (${dim.score.toFixed(2)} / 7.0)\n\nMeasures: ${description}\n\nKey strength. To maintain/enhance: ${suggestion}`;
+      // Default fallback - show both strengths and weaknesses
+      if (kpiData.bestDimension && kpiData.lowestDimension) {
+        const bestDim = kpiData.bestDimension;
+        const worstDim = kpiData.lowestDimension;
+        baseResponse = `💪 Your strongest area: ${bestDim.name} (${bestDim.score.toFixed(2)}/7.0)\n\n⚠️ Area to improve: ${worstDim.name} (${worstDim.score.toFixed(2)}/7.0)\n\nWant me to dive deeper into either of these?`;
         return formatForStaff(baseResponse);
       }
 
-      baseResponse = "Performance data is not currently available.";
+      baseResponse = "Hmm, I couldn't fetch that data right now. Want me to try again? 😊";
       return formatResponse(baseResponse);
     }
 
     // === HOW KPIs ARE CALCULATED ===
-    if (message.match(/(how.*calculated|how.*compute|how.*work|calculation|formula|method|explain.*kpi)/)) {
-      baseResponse = `RehabServE Index Calculation:\n\nOverall Index: Average of all dimension scores (0-7 scale)\nPercentage: (Score / 7.0) × 100\n\nRehabServE Status:\n93-100%: Outstanding\n90-92.9%: Excellent\n85-89.9%: Very Good\n80-84.9%: Good\nBelow 80%: Needs Improvement\n\nDimensions: Average of related question scores\nQuestions: Average of responses (1-7 scale)\nTrend: % change from previous period\nResponse Rate: (Respondents / Total Invited) × 100`;
+    if (message.match(/(how.*calculated|how.*compute|how.*work|calculation|formula|method|explain.*kpi|how.*kpi|kpi.*calculated)/)) {
+      baseResponse = `Here's how we calculate your KPIs:\n\n🔢 RehabServE Index Calculation:\n\nOverall Index: Average of all dimension scores (0-7 scale)\nPercentage: (Score / 7.0) × 100\n\nRehabServE Status:\n93-100%: Outstanding\n90-92.9%: Excellent\n85-89.9%: Very Good\n80-84.9%: Good\nBelow 80%: Needs Improvement\n\nDimensions: Average of related question scores\nQuestions: Average of responses (1-7 scale)\nTrend: % change from previous period\nResponse Rate: (Respondents / Total Invited) × 100`;
       return formatForStaff(baseResponse);
     }
 
     // === WHAT SCORES MEAN ===
-    if (message.match(/(what.*mean|what.*score|interpret|understand|explain.*score|scale|rating)/)) {
+    if (message.match(/(what.*mean|what.*score|interpret|understand|explain.*score|scale|rating|what.*scores|scores.*mean)/)) {
       const currentScore = kpiData?.overallIndex;
       const scoreText = currentScore ? currentScore.toFixed(2) : 'N/A';
       const percentage = currentScore ? scoreToPercentage(currentScore) : 0;
       const percentageText = percentage.toFixed(1);
       const rehabServEStatus = currentScore ? getRehabServEStatus(percentage) : 'N/A';
       
-      baseResponse = `RehabServE Index Guide:\n\n93-100%: Outstanding\n90-92.9%: Excellent\n85-89.9%: Very Good\n80-84.9%: Good\nBelow 80%: Needs Improvement\n\nCurrent: ${scoreText} (${percentageText}%)\n\nStatus: ${rehabServEStatus}`;
+      baseResponse = `Here's what your scores mean:\n\n📋 RehabServE Index Guide:\n\n93-100%: 🌟 Outstanding\n90-92.9%: ⭐ Excellent\n85-89.9%: ✅ Very Good\n80-84.9%: 👍 Good\nBelow 80%: ⚠️ Needs Improvement\n\nYour current score: ${scoreText} (${percentageText}%)\n\nStatus: ${rehabServEStatus}`;
       return formatForStaff(baseResponse);
     }
 
     // === RECOMMENDATIONS / IMPROVEMENTS ===
-    if (message.match(/(recommend|suggest|improve|better|action|what.*do|how.*improve|advice)/)) {
+    if (message.match(/(recommend|suggest|improve|better|action|what.*do|how.*improve|advice|how.*we.*improve|what.*actions|actions.*take|should.*take)/)) {
       if (!kpiData || !dimAnalysis) {
-        baseResponse = "I require performance data to provide recommendations. Please ensure your dashboard data is loaded.";
+        baseResponse = "Hmm, I couldn't fetch that data right now. Want me to try again? 😊\n\nMake sure your dashboard data is loaded so I can give you recommendations.";
         return formatForStaff(baseResponse);
       }
 
       const lowestQuestions = getLowestScoringQuestions(3);
       
-      baseResponse = `Recommendations:\n\n`;
+      baseResponse = `🚀 Here's how we can improve:\n\n`;
       if (kpiData.lowestDimension) {
         const dim = kpiData.lowestDimension;
         const description = getDimensionDescription(dim.name);
         const suggestion = getDimensionSuggestions(dim.name);
         const dimPercentage = scoreToPercentage(dim.score);
-        baseResponse += `Focus area is ${dim.name}, with a score of ${dim.score.toFixed(2)} (${dimPercentage.toFixed(1)}%)\n\nMeasures: ${description}\n\nAction: ${suggestion}`;
+        baseResponse += `Let's focus on ${dim.name} (currently ${dimPercentage.toFixed(1)}%)\n\nThis measures ${description}\n\nMy recommendation: ${suggestion}`;
         if (lowestQuestions.length > 0) {
-          baseResponse += `\n\nLowest-scoring items:\n`;
+          baseResponse += `\n\nStart with these specific items:\n`;
           lowestQuestions.forEach((q, index) => {
             const questionDesc = QUESTION_DESCRIPTIONS[q.questionId] || 'N/A';
-            baseResponse += `${index + 1}. ${q.questionId} (${q.score.toFixed(2)}): ${questionDesc}\n`;
+            baseResponse += `${index + 1}. ${q.questionId}: ${questionDesc}\n`;
           });
         }
       } else {
-        baseResponse += `Review lowest-scoring dimension for improvement opportunities.`;
+        baseResponse += `Let me check your lowest-scoring areas and I'll give you some specific recommendations.`;
       }
       return formatForStaff(baseResponse);
     }
 
     // === EXPLAIN GRAPHS / CHARTS ===
-    if (message.match(/(graph|chart|visualization|plot|diagram|explain.*chart|what.*show|what.*mean)/)) {
-      baseResponse = `Chart Types:\n\nLine Charts: Trends over time (upward = improvement)\nBar Charts: Compare dimensions/questions (taller = higher scores)\nPie Charts: Proportions (larger = greater contribution)\nGauges: Current vs target (closer to max = better)`;
+    if (message.match(/(graph|chart|visualization|plot|diagram|explain.*chart|what.*show|what.*mean|how.*interpret|interpret.*chart|how.*chart)/)) {
+      baseResponse = `Here's how to read your charts:\n\n📉 Chart Types Explained:\n\nLine Charts: Show trends over time (line going up = improvement! 📈)\nBar Charts: Compare dimensions or questions (taller bars = higher scores)\nPie/Donut Charts: Show proportions (bigger slices = greater contribution)\nGauge Charts: Show current vs target (closer to max = better performance)\n\nRemember: Green/upward trends are good, while red/downward trends need attention!`;
       return formatForStaff(baseResponse);
     }
 
@@ -943,8 +946,6 @@ const FloatingChatbot: React.FC<FloatingChatbotProps> = ({
 
     // === PDK-SPECIFIC QUERIES ===
     if (message.match(/(pdk|center|centre)/)) {
-      const pdkName = filters?.pdk && filters.pdk !== 'all' ? filters.pdk : 'PDK';
-      
       if (kpiData && kpiData.lowestDimension) {
         const dim = kpiData.lowestDimension;
         const description = getDimensionDescription(dim.name);
@@ -980,13 +981,13 @@ const FloatingChatbot: React.FC<FloatingChatbotProps> = ({
     }
 
     // === HELP / GENERAL ===
-    if (message.match(/(help|what.*can|what.*do|capabilities|assist)/)) {
-      baseResponse = `I can help with:\n\n- Performance overview\n- Trends\n- Dimension comparisons\n- Strengths/weaknesses\n- Recommendations\n- Score interpretation\n- KPI calculations\n- Chart explanations\n- Response analysis`;
+    if (message.match(/(help|what.*can|what.*do|capabilities|assist|understand.*metric|help.*understand|explain.*metric)/)) {
+      baseResponse = `I'm here to help! I can assist with:\n\n📊 Performance overview\n📈 Trends analysis\n⚖️ Dimension comparisons\n💪 Strengths & areas to improve\n🚀 Improvement recommendations\n📋 Score interpretation\n🔢 KPI calculations\n📉 Chart explanations\n\nWhat would you like to explore?`;
       return formatForStaff(baseResponse);
     }
 
     // === DEFAULT RESPONSE ===
-    baseResponse = `I can help with:\n\n- Performance metrics\n- Trends\n- Dimension analysis\n- Recommendations\n- KPI calculations\n\nPlease rephrase or ask about a specific metric.`;
+    baseResponse = `I'm here to help! I can assist with:\n\n📊 Performance metrics\n📈 Trends analysis\n⚖️ Dimension comparisons\n💪 Strengths & weaknesses\n🚀 Improvement recommendations\n\nTry asking about a specific metric, or use the buttons below to get started!`;
     return formatForStaff(baseResponse);
   };
 
@@ -1151,6 +1152,16 @@ const FloatingChatbot: React.FC<FloatingChatbotProps> = ({
             100% { transform: translateY(0) scale(1) rotate(0deg); }
           }
           
+          @keyframes fadeIn {
+            0% { opacity: 0; transform: translateY(-10px) translateX(-50%); }
+            100% { opacity: 1; transform: translateY(0) translateX(-50%); }
+          }
+          
+          @keyframes float {
+            0%, 100% { transform: translateY(0) translateX(-50%); }
+            50% { transform: translateY(-3px) translateX(-50%); }
+          }
+          
           .avatar-idle {
             animation: breathe 3s ease-in-out infinite, blink 4s ease-in-out infinite;
           }
@@ -1176,6 +1187,23 @@ const FloatingChatbot: React.FC<FloatingChatbotProps> = ({
             role="button"
             tabIndex={0}
           >
+            {/* Speech Bubble with Friendly Greeting */}
+            <div className="absolute -top-20 left-1/2 mb-3" style={{ 
+              animation: 'fadeIn 0.5s ease-out forwards, float 3s ease-in-out infinite 0.5s',
+              transform: 'translateX(-50%)'
+            }}>
+              <div className="relative bg-white rounded-2xl shadow-lg px-4 py-2.5 max-w-[160px] border-2 border-gray-200">
+                <p className="text-sm text-gray-800 font-medium leading-tight text-center whitespace-nowrap">
+                  I'm RehabBot
+                </p>
+                {/* Speech Bubble Tail - pointing to avatar */}
+                <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 translate-y-full">
+                  <div className="w-0 h-0 border-l-[10px] border-l-transparent border-r-[10px] border-r-transparent border-t-[10px] border-t-white"></div>
+                  <div className="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-[2px] w-0 h-0 border-l-[10px] border-l-transparent border-r-[10px] border-r-transparent border-t-[10px] border-t-gray-200"></div>
+                </div>
+              </div>
+            </div>
+
             <div className="flex items-center justify-center transform group-hover:scale-105 transition-transform duration-300">
                   {avatarState === 'talking' ? (
                     <video 
@@ -1185,7 +1213,7 @@ const FloatingChatbot: React.FC<FloatingChatbotProps> = ({
                       loop
                       muted
                       playsInline
-                  className="w-[180px] h-[180px] rounded-full object-cover bg-transparent"
+                  className="w-[140px] h-[140px] rounded-full object-cover bg-transparent"
                       style={{ border: 'none', outline: 'none' }}
                     />
                   ) : avatarState === 'idle' ? (
@@ -1197,7 +1225,7 @@ const FloatingChatbot: React.FC<FloatingChatbotProps> = ({
                       muted
                       playsInline
                       autoPlay
-                  className="w-[180px] h-[180px] rounded-full object-cover bg-transparent"
+                  className="w-[140px] h-[140px] rounded-full object-cover bg-transparent"
                       style={{ border: 'none', outline: 'none' }}
                     />
                   ) : (
@@ -1209,9 +1237,6 @@ const FloatingChatbot: React.FC<FloatingChatbotProps> = ({
                     />
                   )}
                 </div>
-            <div className="absolute -bottom-14 left-1/2 transform -translate-x-1/2 bg-black/80 text-white text-xs px-3 py-1.5 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap pointer-events-none">
-              Chat with RehabBot
-            </div>
           </button>
         </div>
       </>
@@ -1300,7 +1325,7 @@ const FloatingChatbot: React.FC<FloatingChatbotProps> = ({
       `}</style>
       <div
         ref={chatContainerRef}
-        className="fixed bottom-6 left-6 z-[100] bg-white rounded-3xl shadow-2xl transition-all duration-300 w-[300px] h-[500px] max-h-[85vh] flex flex-col overflow-hidden backdrop-blur-sm"
+        className="fixed bottom-6 left-6 z-[100] bg-white rounded-3xl shadow-2xl transition-all duration-300 w-[260px] h-[420px] max-h-[85vh] flex flex-col overflow-hidden backdrop-blur-sm"
         role="dialog"
         aria-label="Chatbot conversation"
         aria-modal="true"
@@ -1341,7 +1366,7 @@ const FloatingChatbot: React.FC<FloatingChatbotProps> = ({
                     loop
                     muted
                     playsInline
-                 className="w-[160px] h-[160px] rounded-full object-cover bg-transparent"
+                 className="w-[120px] h-[120px] rounded-full object-cover bg-transparent"
                     style={{ border: 'none', outline: 'none' }}
                   />
                 ) : avatarState === 'idle' ? (
@@ -1353,7 +1378,7 @@ const FloatingChatbot: React.FC<FloatingChatbotProps> = ({
                     muted
                     playsInline
                     autoPlay
-                 className="w-[160px] h-[160px] rounded-full object-cover bg-transparent"
+                 className="w-[120px] h-[120px] rounded-full object-cover bg-transparent"
                     style={{ border: 'none', outline: 'none' }}
                   />
                 ) : (
@@ -1413,29 +1438,40 @@ const FloatingChatbot: React.FC<FloatingChatbotProps> = ({
             {isTyping && (
               <div className="flex justify-start animate-fade-in" role="status" aria-live="polite">
                 <div className="bg-gray-100 border border-gray-200 rounded-2xl rounded-bl-sm px-5 py-3.5 shadow-sm">
-                    <div className="flex space-x-1.5">
-                    <div className="w-2.5 h-2.5 bg-[#CE1126] rounded-full animate-bounce" style={{ animationDelay: '0ms' }}></div>
-                    <div className="w-2.5 h-2.5 bg-[#FCD106] rounded-full animate-bounce" style={{ animationDelay: '150ms' }}></div>
-                    <div className="w-2.5 h-2.5 bg-[#CE1126] rounded-full animate-bounce" style={{ animationDelay: '300ms' }}></div>
-                  </div>
+                    <div className="flex items-center space-x-2">
+                      <div className="flex space-x-1.5">
+                        <div className="w-2.5 h-2.5 bg-[#CE1126] rounded-full animate-bounce" style={{ animationDelay: '0ms' }}></div>
+                        <div className="w-2.5 h-2.5 bg-[#FCD106] rounded-full animate-bounce" style={{ animationDelay: '150ms' }}></div>
+                        <div className="w-2.5 h-2.5 bg-[#CE1126] rounded-full animate-bounce" style={{ animationDelay: '300ms' }}></div>
+                      </div>
+                      <span className="text-xs text-gray-600 ml-2">Crunching the numbers…</span>
+                    </div>
                 </div>
               </div>
             )}
 
             {/* Suggested Questions - Show when no messages or after bot response */}
             {showSuggestions && !isTyping && (
-              <div className="flex flex-col gap-2 mt-2">
+              <div className="flex flex-col gap-1.5 mt-2">
                 {getSuggestedQuestions().map((question, index) => (
                   <button
                     key={index}
                     onClick={() => handleSuggestionClick(question)}
-                    className="w-full px-3 py-2 text-left text-xs font-medium text-white bg-[#CE1126] hover:bg-[#B01020] border border-[#CE1126] rounded-lg transition-all duration-200 hover:scale-[1.02] active:scale-[0.98] focus:outline-none focus:ring-2 focus:ring-[#CE1126]/50 shadow-md flex items-center gap-2"
+                    className="w-full px-3 py-2 text-left text-xs font-medium text-white bg-[#CE1126] hover:bg-[#B01020] border border-[#CE1126] rounded-lg transition-all duration-200 hover:scale-[1.02] active:scale-[0.98] focus:outline-none focus:ring-2 focus:ring-[#CE1126]/50 shadow-md flex items-center gap-2 min-h-[32px]"
                     aria-label={`Ask: ${question}`}
                   >
-                    <FileText className="h-4 w-4 text-white/70 flex-shrink-0" />
-                    <span className="flex-1">{question}</span>
+                    <span className="flex-1 text-white leading-tight">{question}</span>
                   </button>
                 ))}
+              </div>
+            )}
+
+            {/* Empty state when no messages yet (besides greeting) */}
+            {messages.length <= 1 && !isTyping && !showSuggestions && (
+              <div className="flex justify-center items-center py-8 text-center">
+                <p className="text-sm text-gray-500">
+                  No data yet — once available, I'll help analyze it 😊
+                </p>
               </div>
             )}
 
@@ -1451,20 +1487,20 @@ const FloatingChatbot: React.FC<FloatingChatbotProps> = ({
                 value={inputValue}
                 onChange={(e) => setInputValue(e.target.value)}
                 onKeyPress={handleKeyPress}
-                placeholder="Type your message..."
-                className="flex-1 px-2.5 py-1.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#CE1126]/50 focus:border-[#CE1126]/50 text-xs transition-all bg-white text-gray-900 placeholder-gray-400 shadow-sm hover:bg-gray-50"
-                aria-label="Type your message"
+                placeholder="💬 Ask me anything..."
+                className="flex-1 px-3 py-2.5 border-2 border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#CE1126]/50 focus:border-[#CE1126]/50 text-sm transition-all bg-white text-gray-900 placeholder-gray-500 shadow-sm hover:bg-gray-50 min-h-[44px]"
+                aria-label="Type your question"
                 aria-describedby="send-button"
               />
               <button
                 onClick={handleSendMessage}
                 disabled={!inputValue.trim() || isTyping}
-                className="bg-gradient-to-br from-[#CE1126] to-[#FCD106] text-white px-3 py-1.5 rounded-lg hover:from-[#B01020] hover:to-[#E0C106] disabled:from-gray-300 disabled:to-gray-400 disabled:cursor-not-allowed transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-[#CE1126]/50 focus:ring-offset-2 focus:ring-offset-white shadow-lg hover:shadow-xl active:scale-95 disabled:shadow-none"
+                className="bg-gradient-to-br from-[#CE1126] to-[#FCD106] text-white px-4 py-2.5 rounded-lg hover:from-[#B01020] hover:to-[#E0C106] disabled:from-gray-300 disabled:to-gray-400 disabled:cursor-not-allowed transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-[#CE1126]/50 focus:ring-offset-2 focus:ring-offset-white shadow-lg hover:shadow-xl active:scale-95 disabled:shadow-none min-h-[44px] min-w-[44px] flex items-center justify-center"
                 aria-label="Send message"
                 id="send-button"
                 tabIndex={0}
               >
-                <Send className="h-3 w-3" aria-hidden="true" />
+                <Send className="h-4 w-4" aria-hidden="true" />
               </button>
             </div>
             <p className="text-[10px] text-gray-500 mt-1 text-center font-medium">

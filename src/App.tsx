@@ -13,6 +13,9 @@ import AIInsightsPanel from './components/AIInsightsPanel';
 import HealthOutcomesChart from './components/HealthOutcomesChart';
 import Sidebar from './components/Sidebar';
 import LandingPage from './components/LandingPage';
+import Footer from './components/Footer';
+import AboutUs from './components/AboutUs';
+import ContactUs from './components/ContactUs';
 
 
 const SHEET_ID = "1ZFX7Hy-Hinw1rA-mkpVwfUBQLV1IoHYXnc0CTFVkhqU";
@@ -295,6 +298,7 @@ function App() {
   });
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
   const [activeSection, setActiveSection] = useState<string>('dashboard-overview');
+  const [navSection, setNavSection] = useState<'dashboard' | 'about' | 'contact'>('dashboard');
 
   // State for selected respondent group from donut chart
   const [selectedRespondentGroup] = useState<string>('all');
@@ -302,7 +306,7 @@ function App() {
   // Handle responsive sidebar
   useEffect(() => {
     const handleResize = () => {
-      if (window.innerWidth >= 1024) {
+      if (window.innerWidth >= 1024 && navSection === 'dashboard') {
         setIsSidebarOpen(true);
       } else {
         setIsSidebarOpen(false);
@@ -312,7 +316,16 @@ function App() {
     handleResize();
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
-  }, []);
+  }, [navSection]);
+
+  // Close sidebar when navigating away from dashboard
+  useEffect(() => {
+    if (navSection !== 'dashboard') {
+      setIsSidebarOpen(false);
+    } else if (window.innerWidth >= 1024) {
+      setIsSidebarOpen(true);
+    }
+  }, [navSection]);
 
   const [rawSheetData, setRawSheetData] = useState<any[]>([]);
   const [sheetHeaders, setSheetHeaders] = useState<string[]>([]);
@@ -757,27 +770,149 @@ const overallIndex = dimensionMeans.length > 0
     return <LandingPage onAccessGranted={handlePDKAccessGranted} />;
   }
 
+  // Navigation component for dashboard
+  const Navigation = () => {
+    const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, section: 'dashboard' | 'about' | 'contact') => {
+      e.preventDefault();
+      setNavSection(section);
+      if (section === 'dashboard') {
+        setActiveSection('dashboard-overview');
+      }
+    };
+
+    return (
+      <nav className="w-full bg-white/95 backdrop-blur-sm border-b border-gray-200 sticky top-0 z-40 shadow-sm">
+        <div className="w-full px-4 sm:px-6 lg:px-8">
+          <div className={`flex items-center h-16 ${navSection === 'dashboard' ? 'justify-between' : 'relative'}`}>
+            {/* Navigation Links - Left aligned on dashboard, centered on other pages */}
+            {navSection === 'dashboard' ? (
+              <div className="flex space-x-8">
+                <a
+                  href="#"
+                  onClick={(e) => handleNavClick(e, 'dashboard')}
+                  className="font-medium transition-colors duration-200 text-[#CE1126]"
+                >
+                  Dashboard
+                </a>
+                <a
+                  href="#about"
+                  onClick={(e) => handleNavClick(e, 'about')}
+                  className="font-medium transition-colors duration-200 text-gray-700 hover:text-[#CE1126]"
+                >
+                  About RehabServE
+                </a>
+                <a
+                  href="#contact"
+                  onClick={(e) => handleNavClick(e, 'contact')}
+                  className="font-medium transition-colors duration-200 text-gray-700 hover:text-[#CE1126]"
+                >
+                  Contact Support
+                </a>
+              </div>
+            ) : (
+              <>
+                {/* Left spacer for balance */}
+                <div className="flex-1"></div>
+                
+                {/* Centered Navigation Links */}
+                <div className="flex space-x-8 absolute left-1/2 transform -translate-x-1/2">
+                  <a
+                    href="#"
+                    onClick={(e) => handleNavClick(e, 'dashboard')}
+                    className="font-medium transition-colors duration-200 text-gray-700 hover:text-[#CE1126]"
+                  >
+                    Dashboard
+                  </a>
+                  <a
+                    href="#about"
+                    onClick={(e) => handleNavClick(e, 'about')}
+                    className={`font-medium transition-colors duration-200 ${
+                      navSection === 'about' ? 'text-[#CE1126]' : 'text-gray-700 hover:text-[#CE1126]'
+                    }`}
+                  >
+                    About RehabServE
+                  </a>
+                  <a
+                    href="#contact"
+                    onClick={(e) => handleNavClick(e, 'contact')}
+                    className={`font-medium transition-colors duration-200 ${
+                      navSection === 'contact' ? 'text-[#CE1126]' : 'text-gray-700 hover:text-[#CE1126]'
+                    }`}
+                  >
+                    Contact Support
+                  </a>
+                </div>
+              </>
+            )}
+            
+            {/* Exit Button - Right aligned */}
+            <div className={navSection === 'dashboard' ? '' : 'flex-1 flex justify-end'}>
+              <button
+                onClick={() => {
+                  sessionStorage.removeItem('assignedPDK');
+                  sessionStorage.removeItem('isAdmin');
+                  sessionStorage.removeItem('pdkAccessCode');
+                  setAssignedPDK(null);
+                  setIsAdmin(false);
+                  setSelectedPdk('all');
+                }}
+                className="flex items-center gap-2 px-4 py-2.5 text-sm font-semibold rounded-lg transition-all bg-gray-100 text-gray-700 hover:bg-gray-200 hover:shadow-md active:scale-95 border border-gray-200"
+                title="Exit"
+              >
+                <LogOut className="h-4 w-4" />
+                <span>Exit</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </nav>
+    );
+  };
+
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 via-blue-50/30 to-gray-50 text-gray-900 flex relative overflow-hidden">
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 via-blue-50/30 to-gray-50 text-gray-900 flex flex-col relative overflow-hidden">
       {/* Subtle background shapes for depth */}
       <div className="fixed inset-0 pointer-events-none overflow-hidden z-0">
         <div className="absolute top-0 right-0 w-96 h-96 bg-blue-200/20 rounded-full blur-3xl"></div>
         <div className="absolute bottom-0 left-0 w-96 h-96 bg-green-200/20 rounded-full blur-3xl"></div>
       </div>
 
-      {/* Sidebar */}
-      <Sidebar
-        isOpen={isSidebarOpen}
-        onToggle={() => setIsSidebarOpen(!isSidebarOpen)}
-        activeSection={activeSection}
-        onSectionChange={setActiveSection}
-      />
+      {/* Horizontal Flexbox for Sidebar and Main Content */}
+      <div className="flex flex-1 relative z-10 pt-0 min-h-0">
+        {/* Sidebar - only show on dashboard pages */}
+        {navSection === 'dashboard' && (
+          <Sidebar
+            isOpen={isSidebarOpen}
+            onToggle={() => setIsSidebarOpen(!isSidebarOpen)}
+            activeSection={activeSection}
+            onSectionChange={setActiveSection}
+          />
+        )}
 
-      {/* Main Content Area */}
-      <div className="flex-1 flex flex-col lg:ml-64 relative z-10">
-        {/* Header */}
-        <header className="border-b bg-white/80 backdrop-blur-md border-gray-200/50 sticky top-0 z-30 shadow-sm">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+        {/* Main Content Area - flex-1 to push footer down */}
+        <div className={`flex-1 flex flex-col relative z-10 min-h-0 ${navSection === 'dashboard' ? 'lg:ml-64' : ''}`}>
+          {/* Navigation Bar - shown for all sections */}
+          <Navigation />
+
+          {/* Show AboutUs or ContactUs if selected from navigation */}
+          {navSection === 'about' && (
+            <div className="flex-1 overflow-auto">
+              <AboutUs />
+            </div>
+          )}
+
+          {navSection === 'contact' && (
+            <div className="flex-1 overflow-auto">
+              <ContactUs />
+            </div>
+          )}
+
+          {/* Dashboard Content - only show when navSection is dashboard */}
+          {navSection === 'dashboard' && (
+            <>
+          {/* Header */}
+          <header className="border-b bg-white/80 backdrop-blur-md border-gray-200/50 sticky top-16 z-30 shadow-sm">
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
             <div className="flex items-center gap-6 flex-1">
               {isAdmin ? (
                 <>
@@ -826,23 +961,6 @@ const overallIndex = dimensionMeans.length > 0
                   </div>
                 </>
               )}
-              
-              {/* Exit Button */}
-              <button
-                onClick={() => {
-                  sessionStorage.removeItem('assignedPDK');
-                  sessionStorage.removeItem('isAdmin');
-                  sessionStorage.removeItem('pdkAccessCode');
-                  setAssignedPDK(null);
-                  setIsAdmin(false);
-                  setSelectedPdk('all');
-                }}
-                className="ml-auto flex items-center gap-2 px-4 py-2.5 text-sm font-semibold rounded-lg transition-all bg-gray-100 text-gray-700 hover:bg-gray-200 hover:shadow-md active:scale-95 border border-gray-200"
-                title="Exit"
-              >
-                <LogOut className="h-4 w-4" />
-                <span>Exit</span>
-              </button>
             </div>
           </div>
         </header>
@@ -1121,7 +1239,7 @@ const overallIndex = dimensionMeans.length > 0
 
           {/* Section: Scorecard */}
           {activeSection === 'scorecard' && (
-            <div className="fixed inset-0 top-16 left-0 lg:left-64 bg-gray-50 overflow-auto z-10">
+            <div className="fixed inset-0 top-32 left-0 lg:left-64 bg-gray-50 overflow-auto z-10">
               <div className="p-4 sm:p-6">
               
                 
@@ -1260,17 +1378,37 @@ const overallIndex = dimensionMeans.length > 0
             </div>
           )}
         </main>
+            </>
+          )}
+
+          {/* Footer - shown for all sections except dashboard */}
+          {navSection !== 'dashboard' && (
+            <Footer 
+              onNavClick={(section) => {
+                if (section === 'home') {
+                  setNavSection('dashboard');
+                  setActiveSection('dashboard-overview');
+                } else {
+                  setNavSection(section);
+                }
+              }}
+              withSidebarMargin={false}
+            />
+          )}
+        </div>
       </div>
 
-      {/* Floating Chatbot - Outside main content to ensure proper z-index */}
-      <FloatingChatbot
-        kpiData={kpiData}
-        processedDashboardData={processedDashboardData}
-        filters={{ dateRange: 'last30days', group: 'all', dimension: 'all', pdk: selectedPdk }}
-        respondentGroupOptions={respondentGroupOptions}
-        pdkOptions={pdkOptions}
-        dimensionMappings={dimensionMappings}
-      />
+      {/* Floating Chatbot - Only show on dashboard pages */}
+      {navSection === 'dashboard' && (
+        <FloatingChatbot
+          kpiData={kpiData}
+          processedDashboardData={processedDashboardData}
+          filters={{ dateRange: 'last30days', group: 'all', dimension: 'all', pdk: selectedPdk }}
+          respondentGroupOptions={respondentGroupOptions}
+          pdkOptions={pdkOptions}
+          dimensionMappings={dimensionMappings}
+        />
+      )}
     </div>
   );
 }

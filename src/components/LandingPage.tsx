@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
-import { Shield, Heart, Users, AlertCircle, ArrowRight } from 'lucide-react';
+import { Shield, AlertCircle, ArrowRight, Lock, Activity, CheckCircle2, Building2 } from 'lucide-react';
 import rehabServeLogo from '../../RehabServELogo2.png';
 import AboutUs from './AboutUs';
 import ContactUs from './ContactUs';
+import Footer from './Footer';
 
 interface LandingPageProps {
   onAccessGranted: (pdkCode: string, isAdmin?: boolean) => void;
@@ -111,8 +112,13 @@ const LandingPage: React.FC<LandingPageProps> = ({ onAccessGranted }) => {
 
   const isActive = (section: 'home' | 'about' | 'contact') => currentSection === section;
 
+  const handleFooterNav = (section: 'home' | 'about' | 'contact') => {
+    setCurrentSection(section);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
   const Navigation = () => (
-    <nav className="w-full bg-white/80 backdrop-blur-sm border-b border-gray-200 sticky top-0 z-50 shadow-sm">
+    <nav className="w-full bg-white/95 backdrop-blur-sm border-b border-gray-200 sticky top-0 z-50 shadow-sm">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-center items-center h-16">
           <div className="flex space-x-8">
@@ -123,7 +129,7 @@ const LandingPage: React.FC<LandingPageProps> = ({ onAccessGranted }) => {
                 isActive('home') ? 'text-[#CE1126]' : 'text-gray-700 hover:text-[#CE1126]'
               }`}
             >
-              HOME
+              Home
             </a>
             <a
               href="#about"
@@ -132,7 +138,7 @@ const LandingPage: React.FC<LandingPageProps> = ({ onAccessGranted }) => {
                 isActive('about') ? 'text-[#CE1126]' : 'text-gray-700 hover:text-[#CE1126]'
               }`}
             >
-              ABOUT US
+              About RehabServE
             </a>
             <a
               href="#contact"
@@ -141,7 +147,7 @@ const LandingPage: React.FC<LandingPageProps> = ({ onAccessGranted }) => {
                 isActive('contact') ? 'text-[#CE1126]' : 'text-gray-700 hover:text-[#CE1126]'
               }`}
             >
-              CONTACT US
+              Contact Support
             </a>
           </div>
         </div>
@@ -151,30 +157,36 @@ const LandingPage: React.FC<LandingPageProps> = ({ onAccessGranted }) => {
 
   if (currentSection === 'about') {
     return (
-      <div className="min-h-screen bg-white">
+      <>
         <Navigation />
-        <AboutUs />
-      </div>
+        <div className="min-h-screen bg-white flex flex-col">
+          <AboutUs />
+          <Footer onNavClick={handleFooterNav} />
+        </div>
+      </>
     );
   }
 
   if (currentSection === 'contact') {
     return (
-      <div className="min-h-screen bg-white">
+      <>
         <Navigation />
-        <ContactUs />
-      </div>
+        <div className="min-h-screen bg-white flex flex-col">
+          <ContactUs />
+          <Footer onNavClick={handleFooterNav} />
+        </div>
+      </>
     );
   }
 
   return (
     <>
       <Navigation />
-      <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-green-50 flex items-center justify-center px-4 py-12 relative overflow-hidden">
-      {/* Subtle background pattern */}
-      <div className="absolute inset-0 opacity-5">
+      <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50/30 to-teal-50/30 flex items-center justify-center px-4 py-12 relative overflow-hidden">
+      {/* Subtle medical background pattern - very faint */}
+      <div className="absolute inset-0 opacity-[0.02]">
         <div className="absolute inset-0" style={{
-          backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23000000' fill-opacity='1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
+          backgroundImage: `url("data:image/svg+xml,%3Csvg width='80' height='80' viewBox='0 0 80 80' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' stroke='%231F6E8C' stroke-width='1'%3E%3Cpath d='M0 20h80M20 0v80M40 20h40M20 40h60M0 60h80M60 0v80'/%3E%3C/g%3E%3C/svg%3E")`,
         }}></div>
       </div>
 
@@ -182,49 +194,82 @@ const LandingPage: React.FC<LandingPageProps> = ({ onAccessGranted }) => {
         <div className="grid md:grid-cols-2 gap-8 items-center">
           {/* Left Side - Branding and Trust Elements */}
           <div className="text-center md:text-left space-y-6">
-            <div className="flex justify-center md:justify-start mb-4">
+            <div className="flex justify-center mb-6">
               <img 
                 src={rehabServeLogo} 
                 alt="RehabServE Logo" 
-                className="h-16 w-16 md:h-20 md:w-20 object-contain"
+                className="h-32 w-32 md:h-40 md:w-40 object-contain"
               />
             </div>
             <div className="space-y-4">
-              <h1 className="text-4xl md:text-5xl font-bold text-gray-900 leading-tight">
+              <h1 className="text-4xl md:text-5xl font-semibold text-gray-900 leading-tight" style={{ 
+                letterSpacing: '0.2px',
+                lineHeight: '1.2'
+              }}>
                 RehabServE with AI
-                <span className="block text-2xl md:text-3xl font-normal text-gray-600 mt-2">
+                <span className="block text-2xl md:text-3xl font-medium text-gray-700 mt-2" style={{
+                  letterSpacing: '0.1px'
+                }}>
                   Rehabilitation Service Excellence
                 </span>
               </h1>
               
-              <p className="text-lg text-gray-600 leading-relaxed max-w-md mx-auto md:mx-0">
-                Empowering rehabilitation centres with data-driven insights to deliver exceptional care and support.
+              <p className="text-base text-gray-700 leading-relaxed max-w-lg mx-auto md:mx-0" style={{
+                lineHeight: '1.6',
+                letterSpacing: '0.2px'
+              }}>
+                A secure clinical analytics platform designed to support rehabilitation centres in monitoring performance, improving patient outcomes, and enhancing service quality through data-driven insights.
               </p>
             </div>
 
-            {/* Trust Indicators */}
-            <div className="flex flex-wrap gap-4 justify-center md:justify-start pt-4">
-              <div className="flex items-center gap-2 text-sm text-gray-600">
-                <Shield className="h-5 w-5 text-[#CE1126]" />
-                <span>Secure Access</span>
+            {/* Medical Trust Indicators */}
+            <div className="flex flex-wrap gap-4 justify-center md:justify-start pt-6">
+              <div className="flex items-center gap-2 text-sm text-gray-700 bg-white/60 backdrop-blur-sm px-3 py-2 rounded-lg border border-gray-200">
+                <Building2 className="h-4 w-4 text-[#CE1126]" />
+                <span>Designed for Rehabilitation Centres</span>
               </div>
-              <div className="flex items-center gap-2 text-sm text-gray-600">
-                <Users className="h-5 w-5 text-[#CE1126]" />
-                <span>Trusted Platform</span>
+              <div className="flex items-center gap-2 text-sm text-gray-700 bg-white/60 backdrop-blur-sm px-3 py-2 rounded-lg border border-gray-200">
+                <Shield className="h-4 w-4 text-[#1F6E8C]" />
+                <span>Compliant with Clinical Data Privacy Standards</span>
               </div>
-              <div className="flex items-center gap-2 text-sm text-gray-600">
-                <Heart className="h-5 w-5 text-[#CE1126]" />
-                <span>Care-Focused</span>
+              <div className="flex items-center gap-2 text-sm text-gray-700 bg-white/60 backdrop-blur-sm px-3 py-2 rounded-lg border border-gray-200">
+                <Activity className="h-4 w-4 text-[#FCD106]" />
+                <span>Evidence-Based Performance Monitoring</span>
+              </div>
+            </div>
+
+            {/* Trust Badge Row */}
+            <div className="flex flex-wrap gap-3 justify-center md:justify-start pt-4">
+              <div className="flex items-center gap-1.5 text-xs text-gray-600">
+                <CheckCircle2 className="h-3.5 w-3.5 text-[#FCD106]" />
+                <span>Clinical-grade Analytics</span>
+              </div>
+              <div className="flex items-center gap-1.5 text-xs text-gray-600">
+                <CheckCircle2 className="h-3.5 w-3.5 text-[#FCD106]" />
+                <span>Secure & Confidential</span>
+              </div>
+              <div className="flex items-center gap-1.5 text-xs text-gray-600">
+                <CheckCircle2 className="h-3.5 w-3.5 text-[#FCD106]" />
+                <span>Data-Driven Decision Support</span>
               </div>
             </div>
           </div>
 
           {/* Right Side - Access Form */}
           <div className="w-full max-w-md mx-auto">
-            <div className="bg-white/90 backdrop-blur-sm rounded-2xl shadow-2xl p-8 border border-gray-100">
+            <div className="bg-white rounded-xl p-8 border border-[#E6EDF5]" style={{
+              boxShadow: '0 8px 24px rgba(15, 76, 129, 0.08)'
+            }}>
               <div className="mb-6">
-                <h2 className="text-2xl font-bold text-gray-900 mb-2">Welcome Back</h2>
-                <p className="text-sm text-gray-600">
+                <h2 className="text-2xl font-semibold text-gray-900 mb-2" style={{
+                  letterSpacing: '0.1px'
+                }}>
+                  Clinical Access Portal
+                </h2>
+                <p className="text-sm text-gray-600" style={{
+                  lineHeight: '1.5',
+                  letterSpacing: '0.1px'
+                }}>
                   Enter your PDK access code to view your centre's performance data
                 </p>
               </div>
@@ -234,19 +279,20 @@ const LandingPage: React.FC<LandingPageProps> = ({ onAccessGranted }) => {
                 <div>
                   <label 
                     htmlFor="accessCode" 
-                    className="block text-sm font-semibold text-gray-700 mb-2"
+                    className="flex items-center gap-2 text-sm font-semibold text-gray-700 mb-2"
                   >
-                    PDK Access Code
+                    <Lock className="h-4 w-4 text-[#CE1126]" />
+                    <span>PDK Access Code</span>
                   </label>
                   <input
                     id="accessCode"
                     type="text"
                     value={accessCode}
                     onChange={handleInputChange}
-                    className={`w-full px-4 py-3.5 border-2 rounded-xl focus:outline-none focus:ring-2 transition-all text-gray-900 placeholder-gray-400 ${
+                    className={`w-full px-4 py-3.5 border-2 rounded-lg focus:outline-none focus:ring-2 transition-all text-gray-900 placeholder-gray-400 ${
                       error
                         ? 'border-red-300 focus:ring-red-500 focus:border-red-500 bg-red-50'
-                        : 'border-gray-200 focus:ring-[#CE1126] focus:border-[#CE1126] bg-white hover:border-gray-300'
+                        : 'border-gray-300 focus:ring-[#1F6E8C] focus:border-[#1F6E8C] bg-white hover:border-gray-400'
                     }`}
                     placeholder="Enter your access code"
                     autoFocus
@@ -266,7 +312,10 @@ const LandingPage: React.FC<LandingPageProps> = ({ onAccessGranted }) => {
                 <button
                   type="submit"
                   disabled={isSubmitting}
-                  className="w-full bg-gradient-to-r from-[#CE1126] to-[#FCD106] text-white font-semibold py-3.5 px-6 rounded-xl hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-[#CE1126] focus:ring-offset-2 transition-all disabled:opacity-50 disabled:cursor-not-allowed shadow-md hover:scale-[1.02] transform duration-200 flex items-center justify-center gap-2"
+                  className="w-full text-white font-semibold py-3.5 px-6 rounded-lg hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-[#CE1126] focus:ring-offset-2 transition-all disabled:opacity-50 disabled:cursor-not-allowed shadow-md hover:scale-[1.01] transform duration-200 flex items-center justify-center gap-2"
+                  style={{
+                    background: 'linear-gradient(90deg, #CE1126, #FCD106)'
+                  }}
                 >
                   {isSubmitting ? (
                     <>
@@ -284,7 +333,9 @@ const LandingPage: React.FC<LandingPageProps> = ({ onAccessGranted }) => {
 
               {/* Admin Note */}
               <div className="mt-6 pt-6 border-t border-gray-200">
-                <p className="text-xs text-center text-gray-500">
+                <p className="text-xs text-center text-gray-500" style={{
+                  letterSpacing: '0.1px'
+                }}>
                   Admin access available with administrator credentials
                 </p>
               </div>
@@ -292,14 +343,17 @@ const LandingPage: React.FC<LandingPageProps> = ({ onAccessGranted }) => {
 
             {/* Footer Note */}
             <div className="mt-6 text-center">
-              <p className="text-xs text-gray-500">
+              <p className="text-xs text-gray-500" style={{
+                letterSpacing: '0.1px'
+              }}>
                 Need assistance? Contact your system administrator
               </p>
+            </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
+      <Footer onNavClick={handleFooterNav} />
     </>
   );
 };

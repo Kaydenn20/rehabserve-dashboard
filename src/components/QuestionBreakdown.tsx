@@ -255,7 +255,7 @@ const QuestionBreakdown: React.FC<QuestionBreakdownProps> = ({
   return (
     <div className="bg-white min-h-screen p-4 font-sans relative">
       {/* Download PDF Button */}
-      <div className="fixed top-20 left-6 lg:left-[280px] z-[100]">
+      <div className="fixed top-32 left-6 lg:left-[280px] z-[100]">
         <button
           onClick={downloadPDF}
           className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-lg shadow-lg flex items-center gap-2 transition-colors"
