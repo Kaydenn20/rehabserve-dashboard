@@ -1071,19 +1071,11 @@ const FloatingChatbot: React.FC<FloatingChatbotProps> = ({
   };
 
   // Get avatar image path based on avatar state
+  // Fallback to a placeholder or use video if images don't exist
   const getAvatarImagePath = () => {
-    switch (avatarState) {
-      case 'idle':
-        return '/RehabBotIdle.png';
-      case 'listening':
-        return '/RehabBotListening.png';
-      case 'talking':
-        return '/RehabBotSpeaking.png';
-      case 'success':
-        return '/RehabBotIdle.png'; // Use idle image for success state
-      default:
-        return '/RehabBotIdle.png';
-    }
+    // Since image files may not exist, return a data URI placeholder or empty
+    // The video elements will handle the display, images are fallback
+    return 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48Y2lyY2xlIGN4PSI1MCIgY3k9IjUwIiByPSI0MCIgZmlsbD0iIzM0OThkYiIvPjx0ZXh0IHg9IjUwIiB5PSI1NSIgZm9udC1zaXplPSIyNCIgZmlsbD0iI2ZmZiIgdGV4dC1hbmNob3I9Im1pZGRsZSI+UkI8L3RleHQ+PC9zdmc+';
   };
 
   // Get animation class based on avatar state
@@ -1213,7 +1205,7 @@ const FloatingChatbot: React.FC<FloatingChatbotProps> = ({
                     <video 
                       ref={videoRefClosed}
                       id="hornbillAvatar"
-                      src="/RehabBotSpeaking4.mp4"
+                      src="/RehabBotSpeaking3.mp4"
                       loop
                       muted
                       playsInline
@@ -1224,7 +1216,7 @@ const FloatingChatbot: React.FC<FloatingChatbotProps> = ({
                     <video 
                       ref={idleVideoRefClosed}
                       id="hornbillAvatar"
-                      src="/RehabBotIdle.mp4"
+                      src="/RehabBotIdle2.mp4"
                       loop
                       muted
                       playsInline

@@ -286,6 +286,11 @@ const QuestionBreakdown: React.FC<QuestionBreakdownProps> = ({
           src="/RehabServELogo2.png"
           alt="RehabServE Logo"
           className="h-14"
+          onError={(e) => {
+            // Fallback if logo image doesn't exist
+            const img = e.currentTarget;
+            img.style.display = 'none';
+          }}
         />
       </div>
       {/* Header with Title */}
