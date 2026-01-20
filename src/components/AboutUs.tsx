@@ -123,7 +123,10 @@ Our research team integrates knowledge in healthcare systems and rehabilitation 
                               if (parent && !parent.querySelector('svg')) {
                                 const icon = document.createElement('div');
                                 icon.innerHTML = '<svg class="h-16 w-16 text-[#CE1126]" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" /></svg>';
-                                parent.appendChild(icon.firstChild);
+                                const child = icon.firstChild;
+                                if (child) {
+                                  parent.appendChild(child);
+                                }
                               }
                             }}
                           />
