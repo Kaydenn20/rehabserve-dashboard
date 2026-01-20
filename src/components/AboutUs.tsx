@@ -2,6 +2,7 @@ import React from 'react';
 import { GraduationCap, Database, Brain, Shield, Activity } from 'lucide-react';
 import drAzlina from '../../Dr Azlina.jpeg';
 import profVoon from '../../Prof Voon.jpg';
+import shafizal from '../../shafizal.jpeg';
 
 
 const AboutUs: React.FC = () => {
@@ -29,7 +30,7 @@ const AboutUs: React.FC = () => {
       name: 'Muhamad Norshafizal',
       role: 'Developer',
       description: '',
-      image: '/team-member-3.jpg', // Placeholder - replace with actual image
+      image: shafizal , // Placeholder - replace with actual image
       icon: Brain,
       expertise: ''
     },
@@ -106,7 +107,7 @@ Our research team integrates knowledge in healthcare systems and rehabilitation 
                   {/* Portrait Image */}
                   <div className="mb-5 flex justify-center">
                     <div className="relative">
-                      <div className="w-40 h-40 rounded-full bg-gradient-to-br from-[#CE1126]/10 to-[#FCD106]/10 flex items-center justify-center border-4 border-white"
+                      <div className="w-40 h-40 rounded-full bg-gradient-to-br from-[#CE1126]/10 to-[#FCD106]/10 flex items-center justify-center border-4 border-white overflow-hidden"
                         style={{
                           boxShadow: '0 4px 12px rgba(15, 76, 129, 0.12)'
                         }}
@@ -115,9 +116,9 @@ Our research team integrates knowledge in healthcare systems and rehabilitation 
                           <img
                             src={member.image}
                             alt={member.name || 'Team member'}
-                            className="w-full h-full rounded-full object-cover"
+                            className="w-full h-full object-cover block"
                             onError={(e) => {
-                              // If image fails, hide broken image (no icon fallback)
+                              // If image fails, hide broken image
                               const img = e.currentTarget;
                               img.style.display = 'none';
                             }}
