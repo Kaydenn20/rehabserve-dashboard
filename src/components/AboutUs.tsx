@@ -3,43 +3,44 @@ import { GraduationCap, Database, Brain, Shield, Activity } from 'lucide-react';
 import drAzlina from '../../Dr Azlina.jpeg';
 import profVoon from '../../Prof Voon.jpg';
 import shafizal from '../../shafizal.jpeg';
+import jeffrey from '../../JeffreyJee.jpg';
 
 
 const AboutUs: React.FC = () => {
   const teamMembers = [
     {
       id: 1,
-      name: 'Professor Voon',
+      name: 'PROF.DR. VOON BOO HO',
       role: 'Researcher',
-      description: '',
+      description: 'Fakulti Pengurusan Perniagaan, UiTM Sarawak',
       image: profVoon, // Placeholder - replace with actual image
       icon: GraduationCap,
       expertise: ''
     },
     {
       id: 2,
-      name: 'Dr Azlina',
+      name: 'DR AZLINA BUJANG',
       role: 'Researcher',
-      description: '',
+      description: 'Fakulti Sains Komputer dan Matematik, UiTM Sarawak',
       image: drAzlina,
       icon: Database,
       expertise: ''
     },
     {
       id: 3,
-      name: 'Muhamad Norshafizal',
-      role: 'Developer',
-      description: '',
-      image: shafizal , // Placeholder - replace with actual image
+      name: 'DR. JEFFREY JEE TECK WENG',
+      role: 'Researcher',
+      description: 'Swinburne University of Technology Sarawak',
+      image: jeffrey , // Placeholder - replace with actual image
       icon: Brain,
       expertise: ''
     },
     {
       id: 4,
-      name: '',
-      role: '',
-      description: '',
-      image: '/team-member-4.jpg', // Placeholder - replace with actual image
+      name: 'Muhamad Norshafizal',
+      role: 'Research Assistant',
+      description: 'Fakulti Sains Komputer dan Matematik, UiTM Jasin',
+      image: shafizal, // Placeholder - replace with actual image
       icon: Activity,
       expertise: ''
     }
