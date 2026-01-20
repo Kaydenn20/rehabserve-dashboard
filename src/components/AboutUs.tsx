@@ -1,6 +1,7 @@
 import React from 'react';
 import { GraduationCap, Database, Brain, Shield, Activity } from 'lucide-react';
 
+
 const AboutUs: React.FC = () => {
   const teamMembers = [
     {
@@ -86,8 +87,7 @@ const AboutUs: React.FC = () => {
               lineHeight: '1.6',
               letterSpacing: '0.1px'
             }}>
-              Our interdisciplinary team combines expertise in healthcare systems, data analytics, and artificial intelligence to deliver clinical-grade solutions for rehabilitation service excellence.
-            </p>
+Our research team integrates knowledge in healthcare systems and rehabilitation studies to contribute to high-quality rehabilitation service development.            </p>
           </div>
 
           {/* Team Members Grid */}
