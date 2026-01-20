@@ -26,9 +26,9 @@ const ContactUs: React.FC = () => {
     setSubmitStatus('idle');
 
     // EmailJS configuration
-    const SERVICE_ID = import.meta.env.VITE_EMAILJS_SERVICE_ID || 'service_1t6avl2';
-    const TEMPLATE_ID = import.meta.env.VITE_EMAILJS_TEMPLATE_ID || 'template_zt3rtkq';
-    const PUBLIC_KEY = import.meta.env.VITE_EMAILJS_PUBLIC_KEY || 'UTzwj5QiaUrvAqvdA';
+    const SERVICE_ID = import.meta.env.VITE_EMAILJS_SERVICE_ID || 'service_pba4bko';
+    const TEMPLATE_ID = import.meta.env.VITE_EMAILJS_TEMPLATE_ID || 'template_zzw3814';
+    const PUBLIC_KEY = import.meta.env.VITE_EMAILJS_PUBLIC_KEY || 'TzgED9KNV4HygcjHP';
 
     // Prepare email template parameters
     const templateParams = {
@@ -36,7 +36,7 @@ const ContactUs: React.FC = () => {
       from_email: formData.email,
       organization: formData.organization,
       message: formData.message,
-      to_email: 'support@rehabserve.utm.my', // Your email address
+      to_email: 'rehabserve.care@gmail.com', // Your email address
       reply_to: formData.email,
     };
 
@@ -126,11 +126,11 @@ const ContactUs: React.FC = () => {
                       Support Email
                     </h3>
                     <a 
-                      href="mailto:support@rehabserve.utm.my"
+                      href="mailto:rehabserve.care@gmail.com"
                       className="text-sm text-[#CE1126] hover:text-[#CE1126]/80 transition-colors"
                       style={{ letterSpacing: '0.1px' }}
                     >
-                      shaf8948@gmail.com
+                      rehabserve.care@gmail.com
                       voonbooho@gmail.com
                     </a>
                   </div>

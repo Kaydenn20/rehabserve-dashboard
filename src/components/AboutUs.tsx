@@ -37,7 +37,7 @@ const AboutUs: React.FC = () => {
     },
     {
       id: 4,
-      name: 'Muhamad Norshafizal',
+      name: 'MUHAMAD NORSHAFIZAL',
       role: 'Research Assistant',
       description: 'Fakulti Sains Komputer dan Matematik, UiTM Jasin',
       image: shafizal, // Placeholder - replace with actual image

@@ -106,13 +106,13 @@ const Footer: React.FC<FooterProps> = ({ onNavClick, withSidebarMargin = false }
             <ul className="space-y-3">
               <li>
                 <a
-                  href="mailto:support@rehabserve.utm.my"
+                  href="mailto:rehabserve.care@gmail.com"
                   className="flex items-center gap-2 text-sm text-gray-600 hover:text-[#CE1126] transition-colors duration-200"
                   style={{ letterSpacing: '0.1px' }}
                 >
                   <Mail className="h-3.5 w-3.5 flex-shrink-0 text-[#CE1126]" />
+                  rehabserve.care@gmail.com<br />
                   vooboonho@gmail.com<br />
-                  shaf8948@gmail.com<br />
                 </a>
               </li>
               <li>
