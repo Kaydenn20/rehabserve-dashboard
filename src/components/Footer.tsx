@@ -111,7 +111,8 @@ const Footer: React.FC<FooterProps> = ({ onNavClick, withSidebarMargin = false }
                   style={{ letterSpacing: '0.1px' }}
                 >
                   <Mail className="h-3.5 w-3.5 flex-shrink-0 text-[#CE1126]" />
-                  <span>shaf8948@gmail.com</span>
+                  vooboonho@gmail.com<br />
+                  shaf8948@gmail.com<br />
                 </a>
               </li>
               <li>

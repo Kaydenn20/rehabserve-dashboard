@@ -218,8 +218,7 @@ const LandingPage: React.FC<LandingPageProps> = ({ onAccessGranted }) => {
                 lineHeight: '1.6',
                 letterSpacing: '0.2px'
               }}>
-                A secure clinical analytics platform designed to support rehabilitation centres in monitoring performance, improving patient outcomes, and enhancing service quality through data-driven insights.
-              </p>
+                A secure analytics platform developed to assist rehabilitation centres in performance monitoring, patient outcome improvement, and service quality enhancement through data-driven insights.              </p>
             </div>
 
             {/* Medical Trust Indicators */}
@@ -242,7 +241,7 @@ const LandingPage: React.FC<LandingPageProps> = ({ onAccessGranted }) => {
             <div className="flex flex-wrap gap-3 justify-center md:justify-start pt-4">
               <div className="flex items-center gap-1.5 text-xs text-gray-600">
                 <CheckCircle2 className="h-3.5 w-3.5 text-[#FCD106]" />
-                <span>Clinical-grade Analytics</span>
+                <span>Research-grade Analytics</span>
               </div>
               <div className="flex items-center gap-1.5 text-xs text-gray-600">
                 <CheckCircle2 className="h-3.5 w-3.5 text-[#FCD106]" />
@@ -264,7 +263,7 @@ const LandingPage: React.FC<LandingPageProps> = ({ onAccessGranted }) => {
                 <h2 className="text-2xl font-semibold text-gray-900 mb-2" style={{
                   letterSpacing: '0.1px'
                 }}>
-                  Clinical Access Portal
+                  PDK Access Portal
                 </h2>
                 <p className="text-sm text-gray-600" style={{
                   lineHeight: '1.5',

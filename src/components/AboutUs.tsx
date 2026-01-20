@@ -1,6 +1,7 @@
 import React from 'react';
 import { GraduationCap, Database, Brain, Shield, Activity } from 'lucide-react';
 import drAzlina from '../../Dr Azlina.jpeg';
+import profVoon from '../../Prof Voon.jpg';
 
 
 const AboutUs: React.FC = () => {
@@ -10,7 +11,7 @@ const AboutUs: React.FC = () => {
       name: 'Professor Voon',
       role: 'Researcher',
       description: '',
-      image: '/team-member-1.jpg', // Placeholder - replace with actual image
+      image: profVoon, // Placeholder - replace with actual image
       icon: GraduationCap,
       expertise: ''
     },

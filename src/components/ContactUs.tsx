@@ -131,6 +131,7 @@ const ContactUs: React.FC = () => {
                       style={{ letterSpacing: '0.1px' }}
                     >
                       shaf8948@gmail.com
+                      voonbooho@gmail.com
                     </a>
                   </div>
                 </div>
