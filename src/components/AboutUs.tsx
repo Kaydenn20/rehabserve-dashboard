@@ -94,7 +94,6 @@ Our research team integrates knowledge in healthcare systems and rehabilitation 
           {/* Team Members Grid */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-6">
             {teamMembers.map((member) => {
-              const IconComponent = member.icon;
               return (
                 <div
                   key={member.id}
@@ -111,29 +110,18 @@ Our research team integrates knowledge in healthcare systems and rehabilitation 
                           boxShadow: '0 4px 12px rgba(15, 76, 129, 0.12)'
                         }}
                       >
-                        {member.image && (member.image === drAzlina || (member.image !== '/team-member-1.jpg' && member.image !== '/team-member-2.jpg' && member.image !== '/team-member-3.jpg' && member.image !== '/team-member-4.jpg')) ? (
+                        {member.image ? (
                           <img
                             src={member.image}
                             alt={member.name || 'Team member'}
                             className="w-full h-full rounded-full object-cover"
                             onError={(e) => {
-                              // Fallback to icon if image fails to load
+                              // If image fails, hide broken image (no icon fallback)
                               const img = e.currentTarget;
                               img.style.display = 'none';
-                              const parent = img.parentElement;
-                              if (parent && !parent.querySelector('svg')) {
-                                const icon = document.createElement('div');
-                                icon.innerHTML = '<svg class="h-16 w-16 text-[#CE1126]" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" /></svg>';
-                                const child = icon.firstChild;
-                                if (child) {
-                                  parent.appendChild(child);
-                                }
-                              }
                             }}
                           />
-                        ) : (
-                          <IconComponent className="h-16 w-16 text-[#CE1126]" />
-                        )}
+                        ) : null}
                       </div>
                     </div>
                   </div>
