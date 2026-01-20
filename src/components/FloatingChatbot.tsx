@@ -191,6 +191,8 @@ const FloatingChatbot: React.FC<FloatingChatbotProps> = ({
       setMessages(prev => [...prev, botResponse]);
       setShowSuggestions(true); // Show suggestions again after response
       
+      // Set avatar to talking immediately to avoid interim success image
+      setAvatarState('talking');
       // Speak the bot's response
       speakText(botResponseText);
     }, 1000 + Math.random() * 1000);
@@ -382,12 +384,17 @@ const FloatingChatbot: React.FC<FloatingChatbotProps> = ({
       // Add friendly greeting message
       const greetingMessage: Message = {
         id: 'greeting-' + Date.now(),
-        text: "👋 Hi! I'm RehabBot.\n\nI can help you understand performance trends, strengths, and areas for improvement. What would you like to explore today?",
+        text: "Hi! I'm RehabBot. How can I assist you today?",
         sender: 'bot',
         timestamp: new Date(),
       };
       setMessages([greetingMessage]);
       setShowSuggestions(true);
+      // Start speaking greeting and set avatar to talking to avoid showing RB icon
+      setAvatarState('talking');
+      speakText(greetingMessage.text).catch(() => {
+        // ignore speak errors for greeting
+      });
     }
   }, [isOpen, isMinimized]);
 
@@ -1031,6 +1038,8 @@ const FloatingChatbot: React.FC<FloatingChatbotProps> = ({
       setMessages(prev => [...prev, botResponse]);
       setShowSuggestions(true); // Show suggestions again after bot responds
       
+      // Set avatar to talking immediately to avoid interim success image
+      setAvatarState('talking');
       // Speak the bot's response
       speakText(botResponseText);
     }, 1000 + Math.random() * 1000); // Random delay between 1-2 seconds
@@ -1212,7 +1221,7 @@ const FloatingChatbot: React.FC<FloatingChatbotProps> = ({
                   className="w-[140px] h-[140px] rounded-full object-cover bg-transparent"
                       style={{ border: 'none', outline: 'none' }}
                     />
-                  ) : avatarState === 'idle' ? (
+                  ) : (avatarState === 'idle' || avatarState === 'success') ? (
                     <video 
                       ref={idleVideoRefClosed}
                       id="hornbillAvatar"
@@ -1372,7 +1381,7 @@ const FloatingChatbot: React.FC<FloatingChatbotProps> = ({
                  className="w-[120px] h-[120px] rounded-full object-cover bg-transparent"
                     style={{ border: 'none', outline: 'none' }}
                   />
-                ) : avatarState === 'idle' ? (
+                ) : (avatarState === 'idle' || avatarState === 'success') ? (
                   <video 
                     ref={idleVideoRefHeader}
                     id="hornbillAvatarHeader"
