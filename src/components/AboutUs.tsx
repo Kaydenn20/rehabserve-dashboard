@@ -1,5 +1,6 @@
 import React from 'react';
 import { GraduationCap, Database, Brain, Shield, Activity } from 'lucide-react';
+import drAzlina from '../../Dr Azlina.jpeg';
 
 
 const AboutUs: React.FC = () => {
@@ -18,7 +19,7 @@ const AboutUs: React.FC = () => {
       name: 'Dr Azlina',
       role: 'Researcher',
       description: '',
-      image: '/Dr Azlina.jpeg',
+      image: drAzlina,
       icon: Database,
       expertise: ''
     },
@@ -110,7 +111,7 @@ Our research team integrates knowledge in healthcare systems and rehabilitation 
                           boxShadow: '0 4px 12px rgba(15, 76, 129, 0.12)'
                         }}
                       >
-                        {member.image && (member.image === '/Dr Azlina.jpeg' || (member.image !== '/team-member-1.jpg' && member.image !== '/team-member-2.jpg' && member.image !== '/team-member-3.jpg' && member.image !== '/team-member-4.jpg')) ? (
+                        {member.image && (member.image === drAzlina || (member.image !== '/team-member-1.jpg' && member.image !== '/team-member-2.jpg' && member.image !== '/team-member-3.jpg' && member.image !== '/team-member-4.jpg')) ? (
                           <img
                             src={member.image}
                             alt={member.name || 'Team member'}
