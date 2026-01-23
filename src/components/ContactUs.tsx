@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Mail, Clock, Shield, Lock, Headphones, Send, AlertCircle } from 'lucide-react';
+import { Mail, Clock, Shield, Lock, Headphones, Send, AlertCircle, Phone } from 'lucide-react';
 import emailjs from '@emailjs/browser';
 
 const ContactUs: React.FC = () => {
@@ -118,21 +118,38 @@ const ContactUs: React.FC = () => {
               <div className="space-y-5">
                 {/* Email */}
                 <div className="flex items-start gap-3">
-                  <div className="p-2 bg-[#CE1126]/10 rounded-lg flex-shrink-0">
-                    <Mail className="h-5 w-5 text-[#CE1126]" />
+                  <div className="p-2 bg-[#4CAF50]/10 rounded-lg flex-shrink-0">
+                    <Mail className="h-5 w-5 text-[#4CAF50]" />
                   </div>
                   <div>
                     <h3 className="text-sm font-semibold text-gray-900 mb-1" style={{ letterSpacing: '0.1px' }}>
                       Support Email
                     </h3>
-                    <a 
-                      href="mailto:rehabserve.care@gmail.com"
-                      className="text-sm text-[#CE1126] hover:text-[#CE1126]/80 transition-colors"
-                      style={{ letterSpacing: '0.1px' }}
-                    >
+                    <div className="text-sm text-gray-600 space-y-1" style={{
+                      lineHeight: '1.5',
+                      letterSpacing: '0.1px'
+                    }}>
                       rehabserve.care@gmail.com
-                      voonbooho@gmail.com
-                    </a>
+                      vooboonho@gmail.com
+                      </div>
+                  </div>
+                </div>
+
+                {/* Phone */}
+                <div className="flex items-start gap-3">
+                  <div className="p-2 bg-[#4CAF50]/10 rounded-lg flex-shrink-0">
+                    <Phone className="h-5 w-5 text-[#4CAF50]" />
+                  </div>
+                  <div>
+                    <h3 className="text-sm font-semibold text-gray-900 mb-1" style={{ letterSpacing: '0.1px' }}>
+                      Phone
+                    </h3>
+                    <div className="text-sm text-gray-600 space-y-1" style={{
+                      lineHeight: '1.5',
+                      letterSpacing: '0.1px'
+                    }}>
+                      01127705942
+                    </div>
                   </div>
                 </div>
 

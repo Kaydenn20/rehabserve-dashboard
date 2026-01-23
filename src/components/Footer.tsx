@@ -1,5 +1,5 @@
 import React from 'react';
-import { Shield, Lock, FileText, Clock, Mail } from 'lucide-react';
+import { Shield, Lock, FileText, Clock, Mail, Phone } from 'lucide-react';
 
 interface FooterProps {
   onNavClick?: (section: 'home' | 'about' | 'contact') => void;
@@ -66,34 +66,37 @@ const Footer: React.FC<FooterProps> = ({ onNavClick, withSidebarMargin = false }
             </h4>
             <ul className="space-y-3">
               <li>
-                <a
-                  href="#privacy"
-                  className="flex items-center gap-2 text-sm text-gray-600 hover:text-[#CE1126] transition-colors duration-200"
+                <div
+                  role="text"
+                  aria-disabled="true"
+                  className="flex items-center gap-2 text-sm text-gray-600 cursor-default"
                   style={{ letterSpacing: '0.1px' }}
                 >
                   <Lock className="h-3.5 w-3.5 text-[#CE1126]" />
                   <span>Data Privacy Policy</span>
-                </a>
+                </div>
               </li>
               <li>
-                <a
-                  href="#security"
-                  className="flex items-center gap-2 text-sm text-gray-600 hover:text-[#CE1126] transition-colors duration-200"
+                <div
+                  role="text"
+                  aria-disabled="true"
+                  className="flex items-center gap-2 text-sm text-gray-600 cursor-default"
                   style={{ letterSpacing: '0.1px' }}
                 >
                   <Shield className="h-3.5 w-3.5 text-[#CE1126]" />
                   <span>Security & Confidentiality</span>
-                </a>
+                </div>
               </li>
               <li>
-                <a
-                  href="#guidelines"
-                  className="flex items-center gap-2 text-sm text-gray-600 hover:text-[#CE1126] transition-colors duration-200"
+                <div
+                  role="text"
+                  aria-disabled="true"
+                  className="flex items-center gap-2 text-sm text-gray-600 cursor-default"
                   style={{ letterSpacing: '0.1px' }}
                 >
                   <FileText className="h-3.5 w-3.5 text-[#CE1126]" />
                   <span>System Access Guidelines</span>
-                </a>
+                </div>
               </li>
             </ul>
           </div>
@@ -105,16 +108,28 @@ const Footer: React.FC<FooterProps> = ({ onNavClick, withSidebarMargin = false }
             </h4>
             <ul className="space-y-3">
               <li>
-                <a
-                  href="mailto:rehabserve.care@gmail.com"
-                  className="flex items-center gap-2 text-sm text-gray-600 hover:text-[#CE1126] transition-colors duration-200"
-                  style={{ letterSpacing: '0.1px' }}
-                >
-                  <Mail className="h-3.5 w-3.5 flex-shrink-0 text-[#CE1126]" />
-                  rehabserve.care@gmail.com<br />
-                  vooboonho@gmail.com<br />
-                </a>
+              <div className="flex items-start gap-2 text-sm text-gray-600">
+                  <Mail className="h-3.5 w-3.5 flex-shrink-0 mt-0.5 text-[#CE1126]" />
+                  <div>
+                    <p className="font-medium mb-1">Mail</p>
+                    <p className="text-xs" style={{ lineHeight: '1.5' }}>
+                      rehabsere.care@gmail.com<br />
+                      vooboonho@gmail.com
+                    </p>
+                  </div>
+                </div>
               </li>
+              <li>
+              <div className="flex items-start gap-2 text-sm text-gray-600">
+                  <Phone className="h-3.5 w-3.5 flex-shrink-0 mt-0.5 text-[#CE1126]" />
+                  <div>
+                    <p className="font-medium mb-1">Phone</p>
+                    <p className="text-xs" style={{ lineHeight: '1.5' }}>
+                      01127705942
+                    </p>
+                  </div>
+                </div>
+               </li>   
               <li>
                 <div className="flex items-start gap-2 text-sm text-gray-600">
                   <Clock className="h-3.5 w-3.5 flex-shrink-0 mt-0.5 text-[#CE1126]" />

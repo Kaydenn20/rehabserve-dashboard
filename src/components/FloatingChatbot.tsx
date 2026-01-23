@@ -24,90 +24,14 @@ interface FloatingChatbotProps {
     totalRespondents: number;
   };
   processedDashboardData?: any;
-  filters?: {
-    dateRange: string;
-    group: string;
-    dimension: string;
-    pdk: string;
-  };
-  respondentGroupOptions?: { value: string; label: string }[];
-  pdkOptions?: { value: string; label: string }[];
-  dimensionMappings?: { [key: string]: { value: string } };
+  // Note: unused props removed for clarity
   role?: 'Staff';
 }
 
-// Question descriptions mapping
-const QUESTION_DESCRIPTIONS: { [key: string]: string } = {
-  // TO - Trainee Orientation
-  'TO1': 'Constantly check the level of commitment to serve the trainees\' needs',
-  'TO2': 'Care for the trainees based on a good understanding of the trainees\' needs',
-  'TO3': 'Love and be patient with every trainee',
-  'TO4': 'Regularly understand the trainees\' satisfaction',
-  'TO5': 'Know the changes in the trainees\' preferences',
-  'TO6': 'Excellent after-training service for trainees',
-  // PO - Performance Management
-  'PO1': 'The Rehabilitation Centre strives for service excellence',
-  'PO2': 'The top management is committed to delivering excellent rehabilitation services',
-  'PO3': 'Systematically and regularly measures its service performance',
-  'PO4': 'Seriously monitors its rehabilitation service performance',
-  'PO5': 'Provide resources to enhance trainers\' ability to provide excellent service',
-  'PO6': 'Aiming for being an excellent CBR Centre',
-  // CO - Competitive Orientation
-  'CO1': 'Respond quickly to competitors\' actions that may threaten the Centre',
-  'CO2': 'Continuously knowing the competitors to provide better service',
-  'CO3': 'The target for trainees that the Centre can serve better than its competitors',
-  'CO4': 'Always learn from other rehabilitation centres to care for the trainees',
-  'CO5': 'Always try to be different and better than other CBR Centres',
-  'CO6': 'Work with other CBR Centres and counterparts',
-  // LO - Long-Term Orientation
-  'LO1': 'Invest in providing excellent services to the trainees (e.g., facilities)',
-  'LO2': 'Implement changes to care for the trainees in the long-term',
-  'LO3': 'Emphasise the Centre\'s long-term survival',
-  'LO4': 'Emphasise continuous improvement in managing its services/products',
-  'LO5': 'The Centre has long-term plans in service',
-  'LO6': 'Consider serving the trainees well as a worthwhile long-term investment',
-  'LO7': 'The Centre consistently emphasises service excellence',
-  'LO8': 'Generate income for sustainability of the Centre',
-  // IO - Internal Communication
-  'IO1': 'The employees communicate and "talk" about how to care for the trainees better',
-  'IO2': 'Trainee information is freely distributed in the Centre (e.g., notices)',
-  'IO3': 'The employees of different departments in the Centre have good relationships',
-  'IO4': 'During any activity involving various departments, there is good coordination',
-  'IO5': 'There is good communication between the different departments/units in the Centre',
-  'IO6': 'Work with external organisations',
-  // EO - Employee Management
-  'EO1': 'The employees of the Centre are well trained',
-  'EO2': 'Employees who interact with the trainees are always motivated or joyful',
-  'EO3': 'The Centre have sufficient staff to deliver quality service',
-  'EO4': 'The Centre chooses suitable staff to interact or deal with the trainees',
-  'EO5': 'Motivate trainers to love and care for the trainers',
-  'EO6': 'Encourage employees to have a good relationship with parents',
-};
-
-// Question ID to Dimension mapping
-const QUESTION_TO_DIMENSION: { [key: string]: string } = {
-  'TO1': 'Trainee Orientation', 'TO2': 'Trainee Orientation', 'TO3': 'Trainee Orientation',
-  'TO4': 'Trainee Orientation', 'TO5': 'Trainee Orientation', 'TO6': 'Trainee Orientation',
-  'PO1': 'Performance Orientation', 'PO2': 'Performance Orientation', 'PO3': 'Performance Orientation',
-  'PO4': 'Performance Orientation', 'PO5': 'Performance Orientation', 'PO6': 'Performance Orientation',
-  'CO1': 'Competitor Orientation', 'CO2': 'Competitor Orientation', 'CO3': 'Competitor Orientation',
-  'CO4': 'Competitor Orientation', 'CO5': 'Competitor Orientation', 'CO6': 'Competitor Orientation',
-  'LO1': 'Long-term Focus', 'LO2': 'Long-term Focus', 'LO3': 'Long-term Focus',
-  'LO4': 'Long-term Focus', 'LO5': 'Long-term Focus', 'LO6': 'Long-term Focus',
-  'LO7': 'Long-term Focus', 'LO8': 'Long-term Focus',
-  'IO1': 'Inter-functional Coordination', 'IO2': 'Inter-functional Coordination', 'IO3': 'Inter-functional Coordination',
-  'IO4': 'Inter-functional Coordination', 'IO5': 'Inter-functional Coordination', 'IO6': 'Inter-functional Coordination',
-  'EO1': 'Employee Orientation', 'EO2': 'Employee Orientation', 'EO3': 'Employee Orientation',
-  'EO4': 'Employee Orientation', 'EO5': 'Employee Orientation', 'EO6': 'Employee Orientation',
-};
 
 const FloatingChatbot: React.FC<FloatingChatbotProps> = ({
   kpiData,
   processedDashboardData,
-  filters,
-  respondentGroupOptions,
-  pdkOptions,
-  dimensionMappings,
   role = 'Staff',
 }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -136,28 +60,26 @@ const FloatingChatbot: React.FC<FloatingChatbotProps> = ({
   const getSuggestedQuestions = (): string[] => {
     if (!selectedRole) {
       return [
-        "📊 See overall performance",
-        "📈 View performance trends",
-        "⚖️ Compare performance areas",
-        "💪 Strengths & areas to improve"
+        "Performance snapshot",
+        "Performance stability & trends",
+        "Dimension comparison",
+        "Dimension score breakdown"
       ];
     }
 
     if (selectedRole === 'Staff') {
       return [
-        "📊 See overall performance",
-        "📈 View performance trends",
-        "⚖️ Compare performance areas",
-        "💪 Strengths & areas to improve",
-        "🚀 How can we improve?",
-        "🔢 How are KPIs calculated?",
-        "📋 What do my scores mean?",
-        "⭐ What's our best area?",
-        "⚠️ What needs attention?",
-        "📊 Show all dimension scores",
-        "📉 How to interpret charts?",
-        "💡 What actions should we take?",
-        "❓ Help me understand metrics"
+        "Performance snapshot",
+        "Performance stability & trends",
+        "Dimension comparison",
+        "Dimension score breakdown",
+        "Top-performing dimension",
+        "Priority improvement area",
+        "How to interpret charts",
+        "Strategic improvement focus",
+        "Recommended next actions",
+        "How KPIs are calculated",
+        "What each metric measures"
       ];
     }
     return [];
@@ -558,34 +480,6 @@ const FloatingChatbot: React.FC<FloatingChatbotProps> = ({
     };
   };
 
-  // Helper function to get lowest scoring questions
-  const getLowestScoringQuestions = (count: number = 3) => {
-    if (!processedDashboardData?.questionsData) return [];
-    
-    return [...processedDashboardData.questionsData]
-      .sort((a: any, b: any) => (a.score || 0) - (b.score || 0))
-      .slice(0, count)
-      .map((q: any) => ({
-        questionId: q.questionId,
-        questionNumber: q.questionNumber,
-        dimension: q.dimension || 'Unknown',
-        score: q.score || 0,
-      }));
-  };
-
-  // Helper function to get dimension description
-  const getDimensionDescription = (dimensionName: string): string => {
-    const descriptions: { [key: string]: string } = {
-      'Trainee Orientation': 'how well the organization focuses on addressing individual trainee needs and ensuring successful rehabilitation outcomes',
-      'Performance Orientation': 'the organization\'s commitment to service excellence and systematic performance measurement',
-      'Competitor Orientation': 'how the organization responds to and learns from competitors to provide better services',
-      'Long-term Focus': 'the organization\'s emphasis on long-term planning, sustainability, and continuous improvement',
-      'Inter-functional Coordination': 'the quality of communication and coordination between different departments and units',
-      'Employee Orientation': 'the organization\'s investment in employee development, training, and workplace satisfaction',
-    };
-    return descriptions[dimensionName] || 'organizational performance in this area';
-  };
-
   // Helper function to get actionable suggestions for dimensions (for lowest/improvement)
   const getDimensionSuggestions = (dimensionName: string): string => {
     const suggestions: { [key: string]: string } = {
@@ -597,19 +491,6 @@ const FloatingChatbot: React.FC<FloatingChatbotProps> = ({
       'Employee Orientation': 'invest in staff training programs, enhance employee motivation, and ensure adequate staffing levels',
     };
     return suggestions[dimensionName] || 'review current practices and identify specific areas for improvement';
-  };
-
-  // Helper function to get actionable suggestions for highest dimensions (for maintaining/enhancing)
-  const getHighestDimensionSuggestions = (dimensionName: string): string => {
-    const suggestions: { [key: string]: string } = {
-      'Trainee Orientation': 'continue prioritizing individual trainee needs, maintain regular satisfaction assessments, and keep programs tailored to unique abilities',
-      'Performance Orientation': 'sustain clear performance metrics, maintain regular monitoring systems, and continue committing resources to service excellence',
-      'Competitor Orientation': 'continue monitoring competitor activities, keep learning from best practices, and maintain service differentiation',
-      'Long-term Focus': 'maintain strategic planning efforts, continue investing in sustainable resources, and keep emphasizing continuous improvement',
-      'Inter-functional Coordination': 'sustain strong inter-departmental communication, maintain regular coordination meetings, and continue promoting collaborative practices',
-      'Employee Orientation': 'continue investing in staff training programs, maintain employee motivation initiatives, and ensure adequate staffing levels are sustained',
-    };
-    return suggestions[dimensionName] || 'maintain current practices and continue monitoring performance';
   };
 
   // Helper function to convert 0-7 scale to percentage
@@ -625,19 +506,7 @@ const FloatingChatbot: React.FC<FloatingChatbotProps> = ({
     if (percentage >= 80) return 'Good';
     return 'Needs Improvement';
   };
-
-  // Helper function to get role-based greeting
-  const getRoleBasedGreeting = (role: UserRole): string => {
-    if (!role) return "Greetings! I am RehabBot, your professional analytics advisor.\n\nPlease select your role: Staff.";
-    
-    switch (role) {
-      case 'Staff':
-        return "Greetings! I am RehabBot, your professional analytics advisor. I assist in understanding your dashboard data, KPIs, and performance metrics.\n\nI can provide insights on:\n\nOverall performance and trends\nDimension scores and comparisons\nOrganizational strengths and areas for improvement\nProfessional recommendations for enhancement\nKPI calculations and methodologies\nChart and graph interpretations\n\nHow may I assist you today?";
-      default:
-        return "Greetings! I am RehabBot, your professional analytics advisor.\n\nPlease select your role: Staff.";
-    }
-  };
-
+  
   // Helper function to remove markdown symbols
   const removeMarkdown = (text: string): string => {
     return text
@@ -656,355 +525,164 @@ const FloatingChatbot: React.FC<FloatingChatbotProps> = ({
     if (lowerMessage === 'staff' || lowerMessage === '1') return 'Staff';
     return null;
   };
-
-  // Helper function to format response based on role
-  const formatResponse = (response: string): string => {
-    if (selectedRole === 'Staff') {
-      return formatForStaff(response);
-    }
-    return removeMarkdown(response);
-  };
-
-  // Role-specific response formatters
+  // Role-specific response formatter
   const formatForStaff = (response: string): string => {
     return removeMarkdown(response);
   };
+  
+  // --- Response variation state & helpers (implements user's rules) ---
+  const [overallSummaryShown, setOverallSummaryShown] = useState(false);
+  const lastPerspectiveRef = useRef<string | null>(null);
+  const lastContentTypeRef = useRef<string | null>(null);
+  const intentCountsRef = useRef<Record<string, number>>({});
+  const lastIntentRef = useRef<string | null>(null);
+  const lastIntentTimeRef = useRef<number | null>(null);
 
-  // Analytics-focused bot response system
+  const PERSPECTIVES = ['Executive', 'Analytical', 'Advisory', 'Reassuring', 'Strategic'];
+
+  const pickNextPerspective = () => {
+    const last = lastPerspectiveRef.current;
+    const options = PERSPECTIVES.filter(p => p !== last);
+    const next = options[Math.floor(Math.random() * options.length)];
+    lastPerspectiveRef.current = next;
+    return next;
+  };
+
+  const detectIntent = (text: string): string => {
+    const t = text.toLowerCase();
+    // Priority order -> only one intent returned
+    if (t.includes('performance snapshot') || t.match(/(see overall|show overall|overall performance|kpi|index|current performance)/)) return 'overall';
+    if (t.includes('stability') || t.includes('performance stability') || t.includes('trends') || t.match(/(trend|trends|changing|improving|declining|direction)/)) return 'trends';
+    if (t.includes('dimension comparison') || t.includes('compare')) return 'compare';
+    if (t.includes('dimension score breakdown') || t.includes('score breakdown') || t.includes('show all') || t.includes('dimension score')) return 'dimensions';
+    if (t.includes('top-performing') || t.includes('top performing') || t.includes('top-performing dimension') || t.includes('best area')) return 'strengths';
+    if (t.includes('priority improvement') || t.includes('priority') || t.includes('what needs attention') || t.includes('needs attention')) return 'areas';
+    if (t.includes('strategic improvement') || t.includes('how can we improve') || t.includes('how to improve') || t.includes('recommended next actions') || t.includes('actions')) return 'improve';
+    if (t.includes('what each metric') || t.includes('what each metric measures') || t.includes('understanding metrics') || t.includes('what each metric')) return 'meaning';
+    if (t.includes('how kpi') || t.includes('how kpis') || t.includes('how kpi') || t.includes('how kpis are calculated') || t.includes('how kpis are') || t.includes('how kpis')) return 'kpi';
+    if (t.includes('interpret charts') || t.includes('how to interpret') || t.includes('interpret chart')) return 'charts';
+    if (t.includes('help') || t.includes('what can')) return 'help';
+    return 'default';
+  };
+
+  // Analytics-focused bot response system (implements Response Variation Rules)
   const getBotResponse = (userMessage: string): string => {
-    const message = userMessage.toLowerCase().trim();
-    
-    // Check if user is selecting a role (inform them to use sidebar)
-    const roleSelection = isRoleSelection(userMessage);
+    const raw = userMessage.trim();
+    const message = raw.toLowerCase();
+
+    // Role selection check
+    const roleSelection = isRoleSelection(raw);
     if (roleSelection) {
       return "Please select your role from the sidebar menu. Your role selection will customize my responses to better assist you.";
     }
-
-    // If no role selected, remind user
     if (!selectedRole) {
       return "Please select your role from the sidebar menu: Staff.";
     }
 
+    const intent = detectIntent(message);
+
+    // Update intent counts and timing (for progressive depth & compression)
+    const now = Date.now();
+    lastIntentRef.current = intent;
+    lastIntentTimeRef.current = now;
+    intentCountsRef.current[intent] = (intentCountsRef.current[intent] || 0) + 1;
+
+    // Helper to respect clinical tone and no-data fallbacks
+    const safe = (text: string) => formatForStaff(text);
+
     const dimAnalysis = getDimensionAnalysis();
-    let baseResponse = '';
 
-    // === GREETINGS ===
-    if (message.match(/^(hi|hello|hey|good morning|good afternoon|good evening)$/)) {
-      if (selectedRole === 'Staff') {
-        baseResponse = `Hi! I'm RehabBot.\n\nI can help you understand performance trends, strengths, and areas for improvement. What would you like to explore today?`;
-        return formatForStaff(baseResponse);
-      }
-    }
+    // Perspective rotation (avoid repeating same perspective twice)
+    pickNextPerspective();
 
-    // === OVERALL PERFORMANCE / KPI OVERVIEW ===
-    if (message.match(/(overall|kpi|index|performance|score|how.*doing|current.*performance|see.*overall|show.*overall)/)) {
-      if (!kpiData) {
-        baseResponse = "Hmm, I couldn't fetch that data right now. Want me to try again? \n\nMake sure your dashboard is properly loaded and data is available.";
-        if (selectedRole === 'Staff') return formatForStaff(baseResponse);
-        return baseResponse;
-      }
-
-      const overall = kpiData.overallIndex;
-      const overallFormatted = overall.toFixed(2);
-      const percentage = scoreToPercentage(overall);
-      const percentageFormatted = percentage.toFixed(1);
-      const rehabServEStatus = getRehabServEStatus(percentage);
-      const trend = kpiData.trend;
-      
-      // Determine trend status and interpretation - more conversational
-      let trendText: string;
-      
-      if (trend > 0) {
-        trendText = `Great news! Performance is improving (+${trend.toFixed(2)}%). Keep up the excellent work!`;
-      } else if (trend < 0) {
-        trendText = `I noticed a slight drop in performance this month (${trend.toFixed(2)}%). The biggest change came from ${kpiData.lowestDimension?.name || 'various areas'}. Want me to explain further?`;
-      } else {
-        trendText = 'Performance is stable.';
-      }
-      
-      baseResponse = `Here's your overall performance:\n\n RehabServE Index: ${overallFormatted} (${percentageFormatted}%)\n\nStatus: ${rehabServEStatus}\n\n${trendText}`;
-      if (kpiData.lowestDimension) {
-        const dimPercentage = scoreToPercentage(kpiData.lowestDimension.score);
-        baseResponse += `\n\nThe area needing attention is ${kpiData.lowestDimension.name} at ${dimPercentage.toFixed(1)}%.`;
-      }
-      baseResponse += `\n\nBased on ${kpiData.totalRespondents} responses.`;
-      return formatForStaff(baseResponse);
-    }
-
-    // === TREND ANALYSIS ===
-    if (message.match(/(trend|changing|improving|declining|getting better|getting worse|direction|view.*trend)/)) {
-      if (!kpiData) {
-        baseResponse = "Hmm, I couldn't fetch that data right now. Want me to try again? \n\nMake sure your dashboard filters are set correctly and data is loaded.";
-        if (selectedRole === 'Staff') return formatForStaff(baseResponse);
-        return baseResponse;
-      }
-
-      const trend = kpiData.trend;
-      
-      if (trend > 0) {
-        baseResponse = ` Your performance is improving! The trend shows a +${trend.toFixed(2)}% increase.\n\nKeep maintaining your current strengths while looking for new opportunities to grow.`;
-        return formatForStaff(baseResponse);
-      } else if (trend < 0) {
-        baseResponse = `I noticed a drop in performance this period (${trend.toFixed(2)}%). Here's what I recommend:\n\n1. Check out your lowest-scoring dimension\n2. Look at specific questions that need attention\n3. Let's create an improvement plan together`;
-        return formatForStaff(baseResponse);
-      } else {
-        baseResponse = `Performance is staying stable. That's a good foundation to build from!`;
-        return formatForStaff(baseResponse);
-      }
-    }
-
-    // === DIMENSION ANALYSIS ===
-    if (message.match(/(dimension|dimensions|all.*scores|compare.*dimensions|which.*best|which.*worst|compare.*performance|performance.*areas|show.*dimension|all.*dimension)/)) {
-      if (!dimAnalysis) {
-        baseResponse = "Hmm, I couldn't fetch that data right now. Want me to try again? \n\nMake sure the dashboard is loaded with dimension data.";
-        return formatResponse(baseResponse);
-      }
-
-      const askingHighest = message.match(/(highest|best|top|strongest|excellent)/);
-      const askingLowest = message.match(/(lowest|worst|bottom|weakest|poor)/);
-
-      if (askingHighest && dimAnalysis.highest) {
-        const dim = dimAnalysis.highest;
-        const description = getDimensionDescription(dim.name);
-        const suggestion = getHighestDimensionSuggestions(dim.name);
-        
-        baseResponse = ` Your strongest area is ${dim.name} (${dim.score.toFixed(2)}/7.0)\n\nThis measures ${description}\n\nThis is a real strength! To keep it strong: ${suggestion}`;
-        return formatForStaff(baseResponse);
-      }
-      
-      if (askingLowest && dimAnalysis.lowest) {
-        const dim = dimAnalysis.lowest;
-        const description = getDimensionDescription(dim.name);
-        const suggestion = getDimensionSuggestions(dim.name);
-        const lowestQuestions = getLowestScoringQuestions(3);
-        
-        const dimPercentage = scoreToPercentage(dim.score);
-        baseResponse = `The area needing attention is ${dim.name} (${dimPercentage.toFixed(1)}%)\n\nThis measures ${description}\n\nHere's what I suggest: ${suggestion}`;
-        if (lowestQuestions.length > 0) {
-          baseResponse += `\n\nSpecific items to focus on:\n`;
-          lowestQuestions.forEach((q, index) => {
-            const questionDesc = QUESTION_DESCRIPTIONS[q.questionId] || 'N/A';
-            baseResponse += `${index + 1}. ${q.questionId}: ${questionDesc}\n`;
-          });
+    // Templates provided by user (clinical tone)
+    switch (intent) {
+      case 'overall': {
+        if (!kpiData) {
+          return safe("Data unavailable. Ensure the dashboard is loaded and try again.");
         }
-        return formatForStaff(baseResponse);
+        if (!overallSummaryShown) {
+          setOverallSummaryShown(true);
+          lastContentTypeRef.current = 'snapshot';
+          return safe(`Overall performance is very good.\nThe RehabServE Index stands at ${scoreToPercentage(kpiData.overallIndex).toFixed(1)}%, indicating stable and consistent service performance across measured dimensions.\nNo immediate risks were detected based on the current data set (n = ${kpiData.totalRespondents}).`);
+        }
+        // After first time - concise reference
+        lastContentTypeRef.current = 'snapshot';
+        return safe(`Performance remains stable and within the ${getRehabServEStatus(scoreToPercentage(kpiData.overallIndex))} range.\nNo significant changes have been observed since the last review.`);
       }
 
-      // Default: show all dimensions - more conversational
-      baseResponse = `Here's how all your performance areas compare:\n\n`;
-      dimAnalysis.all.forEach((dim: any) => {
-        const status = dim.score >= 6.0 ? ' Excellent' : dim.score >= 5.0 ? ' Good' : ' Needs Attention';
-        baseResponse += `${dim.name}: ${dim.score.toFixed(2)}/7.0 - ${status}\n`;
-      });
-      return formatForStaff(baseResponse);
-    }
-
-    // === STRENGTHS AND WEAKNESSES ===
-    if (message.match(/(strength|weakness|strong|weak|best|worst|lowest|highest|excellent|poor|areas.*improve|what.*best|what.*worst|best.*area|what.*needs.*attention|what.*attention)/)) {
-      if (!kpiData || !dimAnalysis) {
-        baseResponse = "Hmm, I couldn't fetch that data right now. Want me to try again? \n\nMake sure your dashboard is loaded with performance data.";
-        return formatResponse(baseResponse);
+      case 'trends': {
+        if (!kpiData) return safe("Trend data unavailable.");
+        lastContentTypeRef.current = 'trends';
+        return safe(`Performance levels have remained consistent, with no notable upward or downward shifts detected.\nThis suggests operational stability rather than short-term fluctuation.`);
       }
 
-      const askingHighest = message.match(/(strength|strong|best|highest|excellent)/);
-      const askingLowest = message.match(/(weakness|weak|worst|lowest|poor)/);
+      case 'compare': {
+        if (!kpiData || !kpiData.bestDimension) return safe("Dimension comparison data unavailable.");
+        // Return ranked list (highest -> lowest) without explanations
+        const dims = (processedDashboardData?.dimensionsData || []).map((d: any) => d.label);
+        // Fallback to kpiData dimensions if processedDashboardData unavailable
+        const ranked = dims.length > 0 ? dims : [kpiData.bestDimension?.name, kpiData.lowestDimension?.name].filter(Boolean);
+        lastContentTypeRef.current = 'comparison';
+        return safe(`Dimension ranking (highest → lowest):\n\n${ranked.join('\n')}`);
+      }
 
-      if (askingHighest && kpiData.bestDimension) {
+      case 'strengths': {
+        if (!kpiData || !kpiData.bestDimension) return safe("Best-area data unavailable.");
         const dim = kpiData.bestDimension;
-        const description = getDimensionDescription(dim.name);
-        const suggestion = getHighestDimensionSuggestions(dim.name);
-        
-        baseResponse = `Your strength: ${dim.name} (${dim.score.toFixed(2)}/7.0)\n\nThis measures ${description}\n\nGreat job! To keep it strong: ${suggestion}`;
-        return formatForStaff(baseResponse);
+        lastContentTypeRef.current = 'strengths';
+        return safe(`${dim.name} is your strongest dimension.\nThis reflects a clear commitment to service excellence, structured evaluation, and outcome tracking.`);
       }
-      
-      if (askingLowest && kpiData.lowestDimension) {
+
+      case 'areas': {
+        if (!kpiData || !kpiData.lowestDimension) return safe("Area needing attention data unavailable.");
         const dim = kpiData.lowestDimension;
-        const description = getDimensionDescription(dim.name);
-        const suggestion = getDimensionSuggestions(dim.name);
-        const lowestQuestions = getLowestScoringQuestions(3);
-        
-        baseResponse = `This area needs attention: ${dim.name} (${dim.score.toFixed(2)}/7.0)\n\nThis measures ${description}\n\nHere's what I suggest: ${suggestion}`;
-        if (lowestQuestions.length > 0) {
-          baseResponse += `\n\nSpecific items to focus on:\n`;
-          lowestQuestions.forEach((q, index) => {
-            const questionDesc = QUESTION_DESCRIPTIONS[q.questionId] || 'N/A';
-            baseResponse += `${index + 1}. ${q.questionId}: ${questionDesc}\n`;
-          });
-        }
-        return formatForStaff(baseResponse);
+        lastContentTypeRef.current = 'areas';
+        return safe(`${dim.name} shows the most room for improvement.`);
       }
 
-      // Default fallback - show both strengths and weaknesses
-      if (kpiData.bestDimension && kpiData.lowestDimension) {
-        const bestDim = kpiData.bestDimension;
-        const worstDim = kpiData.lowestDimension;
-        baseResponse = `Your strongest area: ${bestDim.name} (${bestDim.score.toFixed(2)}/7.0)\n\n Area to improve: ${worstDim.name} (${worstDim.score.toFixed(2)}/7.0)\n\nWant me to dive deeper into either of these?`;
-        return formatForStaff(baseResponse);
+      case 'improve': {
+        const target = kpiData?.lowestDimension?.name || 'Competitor Orientation';
+        const suggestion = getDimensionSuggestions(target);
+        lastContentTypeRef.current = 'actions';
+        // Actions only — no metrics or restated scores
+        return safe(`Recommended next actions to strengthen ${target}:\n• ${suggestion.replace(/, /g, '\n• ')}\n\nThese steps focus on implementation rather than measurement.`);
       }
 
-      baseResponse = "Hmm, I couldn't fetch that data right now. Want me to try again? ";
-      return formatResponse(baseResponse);
-    }
-
-    // === HOW KPIs ARE CALCULATED ===
-    if (message.match(/(how.*calculated|how.*compute|how.*work|calculation|formula|method|explain.*kpi|how.*kpi|kpi.*calculated)/)) {
-      baseResponse = `Here's how we calculate your KPIs:\n\n RehabServE Index Calculation:\n\nOverall Index: Average of all dimension scores (0-7 scale)\nPercentage: (Score / 7.0) × 100\n\nRehabServE Status:\n93-100%: Outstanding\n90-92.9%: Excellent\n85-89.9%: Very Good\n80-84.9%: Good\nBelow 80%: Needs Improvement\n\nDimensions: Average of related question scores\nQuestions: Average of responses (1-7 scale)\nTrend: % change from previous period\nResponse Rate: (Respondents / Total Invited) × 100`;
-      return formatForStaff(baseResponse);
-    }
-
-    // === WHAT SCORES MEAN ===
-    if (message.match(/(what.*mean|what.*score|interpret|understand|explain.*score|scale|rating|what.*scores|scores.*mean)/)) {
-      const currentScore = kpiData?.overallIndex;
-      const scoreText = currentScore ? currentScore.toFixed(2) : 'N/A';
-      const percentage = currentScore ? scoreToPercentage(currentScore) : 0;
-      const percentageText = percentage.toFixed(1);
-      const rehabServEStatus = currentScore ? getRehabServEStatus(percentage) : 'N/A';
-      
-      baseResponse = `Here's what your scores mean:\n\n RehabServE Index Guide:\n\n93-100%:  Outstanding\n90-92.9%: ⭐ Excellent\n85-89.9%: ✅ Very Good\n80-84.9%: 👍 Good\nBelow 80%: ⚠️ Needs Improvement\n\nYour current score: ${scoreText} (${percentageText}%)\n\nStatus: ${rehabServEStatus}`;
-      return formatForStaff(baseResponse);
-    }
-
-    // === RECOMMENDATIONS / IMPROVEMENTS ===
-    if (message.match(/(recommend|suggest|improve|better|action|what.*do|how.*improve|advice|how.*we.*improve|what.*actions|actions.*take|should.*take)/)) {
-      if (!kpiData || !dimAnalysis) {
-        baseResponse = "Hmm, I couldn't fetch that data right now. Want me to try again? \n\nMake sure your dashboard data is loaded so I can give you recommendations.";
-        return formatForStaff(baseResponse);
+      case 'meaning': {
+        lastContentTypeRef.current = 'meaning';
+        // Interpretation only — avoid repeating raw numbers unless explicitly requested
+        const status = kpiData ? getRehabServEStatus(scoreToPercentage(kpiData.overallIndex)) : 'N/A';
+        return safe(`Interpretation: RehabServE is currently assessed as ${status}.\nThis reflects reliable performance with targeted opportunities for refinement rather than corrective action.`);
       }
 
-      const lowestQuestions = getLowestScoringQuestions(3);
-      
-      baseResponse = `Here's how we can improve:\n\n`;
-      if (kpiData.lowestDimension) {
-        const dim = kpiData.lowestDimension;
-        const description = getDimensionDescription(dim.name);
-        const suggestion = getDimensionSuggestions(dim.name);
-        const dimPercentage = scoreToPercentage(dim.score);
-        baseResponse += `Let's focus on ${dim.name} (currently ${dimPercentage.toFixed(1)}%)\n\nThis measures ${description}\n\nMy recommendation: ${suggestion}`;
-        if (lowestQuestions.length > 0) {
-          baseResponse += `\n\nStart with these specific items:\n`;
-          lowestQuestions.forEach((q, index) => {
-            const questionDesc = QUESTION_DESCRIPTIONS[q.questionId] || 'N/A';
-            baseResponse += `${index + 1}. ${q.questionId}: ${questionDesc}\n`;
-          });
-        }
-      } else {
-        baseResponse += `Let me check your lowest-scoring areas and I'll give you some specific recommendations.`;
-      }
-      return formatForStaff(baseResponse);
-    }
-
-    // === EXPLAIN GRAPHS / CHARTS ===
-    if (message.match(/(graph|chart|visualization|plot|diagram|explain.*chart|what.*show|what.*mean|how.*interpret|interpret.*chart|how.*chart)/)) {
-      baseResponse = `Here's how to read your charts:\n\n Chart Types Explained:\n\nLine Charts: Show trends over time (line going up = improvement! )\nBar Charts: Compare dimensions or questions (taller bars = higher scores)\nPie/Donut Charts: Show proportions (bigger slices = greater contribution)\nGauge Charts: Show current vs target (closer to max = better performance)\n\nRemember: Green/upward trends are good, while red/downward trends need attention!`;
-      return formatForStaff(baseResponse);
-    }
-
-    // === SPECIFIC DIMENSION QUESTIONS ===
-    const dimensionMatch = message.match(/(trainee orientation|performance orientation|competitor orientation|long-term focus|inter-functional coordination|employee orientation)/i);
-    if (dimensionMatch) {
-      const dimName = dimensionMatch[0];
-      const dimData = dimAnalysis?.all.find((d: any) => 
-        d.name.toLowerCase() === dimName.toLowerCase()
-      );
-      
-      if (dimData) {
-        baseResponse = `${dimData.name}: ${dimData.score.toFixed(2)} / 7.0\n\nStatus: ${dimData.score >= 6.0 ? 'Excellent' : dimData.score >= 5.0 ? 'Good' : dimData.score >= 4.0 ? 'Needs Improvement' : 'Requires Attention'}\n\n${dimData.score < 5.0 ? 'Consider improvement initiatives.' : 'Maintain current practices.'}`;
-        return formatForStaff(baseResponse);
-      }
-    }
-
-    // === QUESTION ID QUERIES (TO1, TO2, PO1, etc.) ===
-    const questionIdMatch = message.match(/\b(TO|PO|CO|LO|IO|EO)(\d+)\b/i);
-    if (questionIdMatch) {
-      const questionId = questionIdMatch[0].toUpperCase();
-      const description = QUESTION_DESCRIPTIONS[questionId];
-      const dimension = QUESTION_TO_DIMENSION[questionId];
-      
-      if (description) {
-        const questionData = processedDashboardData?.questionsData?.find((q: any) => 
-          q.questionId === questionId
-        );
-        
-        baseResponse = `${questionId}\n\n${description}\n\nDimension: ${dimension || 'Unknown'}`;
-        if (questionData) {
-          baseResponse += `\n\nScore: ${questionData.score?.toFixed(2) || 'N/A'} / 7.0`;
-          const score = questionData.score || 0;
-          if (score >= 6.0) {
-            baseResponse += ` (Excellent)`;
-          } else if (score >= 5.0) {
-            baseResponse += ` (Good - room for improvement)`;
-          } else if (score >= 4.0) {
-            baseResponse += ` (Average - needs attention)`;
-          } else {
-            baseResponse += ` (Low - requires improvement)`;
-          }
-        } else {
-          baseResponse += `\n\nScore data not available.`;
-        }
-        return formatForStaff(baseResponse);
-      } else {
-        baseResponse = `Question ID ${questionId} not found. Valid question IDs are:\n\nTO1-TO6 (Trainee Orientation)\nPO1-PO6 (Performance Orientation)\nCO1-CO6 (Competitor Orientation)\nLO1-LO8 (Long-term Focus)\nIO1-IO6 (Inter-functional Coordination)\nEO1-EO6 (Employee Orientation)`;
-        return formatResponse(baseResponse);
-      }
-    }
-
-    // === PARTICIPATION / RESPONDENTS ===
-    if (message.match(/(participation|respondents|how many|sample size)/)) {
-      if (!kpiData) {
-        baseResponse = "Respondent data is not available.";
-        return formatForStaff(baseResponse);
+      case 'kpi': {
+        lastContentTypeRef.current = 'methodology';
+        return safe(`KPI calculation (method):\nRehabServE Index = aggregated averages of dimension scores (0-7 scale). Percent = (score / 7) × 100. Status bands are applied to percentiles for benchmarking.`);
       }
 
-      baseResponse = `Total Respondents: ${kpiData.totalRespondents}\n\nTotal survey responses for current filter settings.`;
-      return formatForStaff(baseResponse);
-    }
-
-    // === PDK-SPECIFIC QUERIES ===
-    if (message.match(/(pdk|center|centre)/)) {
-      if (kpiData && kpiData.lowestDimension) {
-        const dim = kpiData.lowestDimension;
-        const description = getDimensionDescription(dim.name);
-        const suggestion = getDimensionSuggestions(dim.name);
-        const lowestQuestions = getLowestScoringQuestions(3);
-        
-        const overallPercentage = scoreToPercentage(kpiData.overallIndex);
-        const overallStatus = getRehabServEStatus(overallPercentage);
-        const dimPercentage = scoreToPercentage(dim.score);
-        
-        baseResponse = `Performance Report\n\nRehabServE Index: ${kpiData.overallIndex.toFixed(2)} (${overallPercentage.toFixed(1)}%)\n\nStatus: ${overallStatus}\n\nFocus area is ${dim.name}, with a score of ${dim.score.toFixed(2)} (${dimPercentage.toFixed(1)}%)\n\nMeasures: ${description}\n\nAction: ${suggestion}`;
-        if (lowestQuestions.length > 0) {
-          baseResponse += `\n\nLowest-scoring items:\n`;
-          lowestQuestions.forEach((q, index) => {
-            const questionDesc = QUESTION_DESCRIPTIONS[q.questionId] || 'N/A';
-            const qPercentage = scoreToPercentage(q.score);
-            baseResponse += `${index + 1}. ${q.questionId} (${q.score.toFixed(2)}, ${qPercentage.toFixed(1)}%): ${questionDesc}\n`;
-          });
-        }
-        return formatForStaff(baseResponse);
+      case 'reassurance': {
+        return safe(`There are no warning signals in the current data.\nPerformance is stable, and results are consistent with previous measurements.`);
       }
-      
-      if (kpiData) {
-        const overallPercentage = scoreToPercentage(kpiData.overallIndex);
-        const overallStatus = getRehabServEStatus(overallPercentage);
-      
-        baseResponse = `Performance Overview\n\nRehabServE Index: ${kpiData.overallIndex.toFixed(2)} / 7.0 (${overallPercentage.toFixed(1)}%)\n\nStatus: ${overallStatus}\n\nNeed specific recommendations?`;
-        return formatForStaff(baseResponse);
-      } else {
-        baseResponse = `Performance Overview\n\nOverall: N/A\n\nNeed specific recommendations?`;
-        return formatForStaff(baseResponse);
+
+      case 'dimensions': {
+        if (!dimAnalysis) return safe("Dimension scores are unavailable.");
+        // Return raw values only (no interpretation)
+        const lines = dimAnalysis.all.map((dim: any) => {
+          const pct = scoreToPercentage(dim.score);
+          return `${dim.name}: ${dim.score.toFixed(2)}/7.0 (${pct.toFixed(1)}%)`;
+        });
+        lastContentTypeRef.current = 'scores';
+        return safe(`Dimension score breakdown (values only):\n\n${lines.join('\n')}`);
       }
-    }
 
-    // === HELP / GENERAL ===
-    if (message.match(/(help|what.*can|what.*do|capabilities|assist|understand.*metric|help.*understand|explain.*metric)/)) {
-      baseResponse = `I'm here to help! I can assist with:\n\n Performance overview\n Trends analysis\n Dimension comparisons\n Strengths & areas to improve\n Improvement recommendations\n Score interpretation\n KPI calculations\n Chart explanations\n\nWhat would you like to explore?`;
-      return formatForStaff(baseResponse);
-    }
+      case 'help': {
+        return safe(`I can summarize your dashboard, explain trends, compare dimensions, list improvement actions, or show how KPIs are calculated. Which would you like?`);
+      }
 
-    // === DEFAULT RESPONSE ===
-    baseResponse = `I'm here to help! I can assist with:\n\n Performance metrics\n Trends analysis\n Dimension comparisons\n Strengths & weaknesses\n Improvement recommendations\n\nTry asking about a specific metric, or use the buttons below to get started!`;
-    return formatForStaff(baseResponse);
+      default:
+        return safe(`I'm here to help. Ask about overall performance, trends, dimensions, or improvement actions.`);
+    }
   };
 
   const handleSendMessage = () => {

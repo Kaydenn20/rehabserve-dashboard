@@ -1403,10 +1403,8 @@ const overallIndex = dimensionMeans.length > 0
         <FloatingChatbot
           kpiData={kpiData}
           processedDashboardData={processedDashboardData}
-          filters={{ dateRange: 'last30days', group: 'all', dimension: 'all', pdk: selectedPdk }}
-          respondentGroupOptions={respondentGroupOptions}
-          pdkOptions={pdkOptions}
-          dimensionMappings={dimensionMappings}
+          // Only pass required props
+          // filters/respondentGroupOptions/pdkOptions/dimensionMappings removed (not used by component)
         />
       )}
     </div>
