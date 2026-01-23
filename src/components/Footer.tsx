@@ -1,5 +1,5 @@
 import React from 'react';
-import { Shield, Lock, FileText, Clock, Mail, Phone } from 'lucide-react';
+import { Shield, Lock, FileText, Clock, Mail, Phone, Home, Info, Contact } from 'lucide-react';
 
 interface FooterProps {
   onNavClick?: (section: 'home' | 'about' | 'contact') => void;
@@ -26,33 +26,36 @@ const Footer: React.FC<FooterProps> = ({ onNavClick, withSidebarMargin = false }
               Quick Links
             </h4>
             <ul className="space-y-3">
-              <li>
-                <a
-                  href="#"
-                  onClick={(e) => handleLinkClick(e, 'home')}
-                  className="text-sm text-gray-600 hover:text-[#CE1126] transition-colors duration-200"
-                  style={{ letterSpacing: '0.1px' }}
-                >
-                  Home
-                </a>
-              </li>
+            <li>
+                  <a
+                    href="#"
+                    onClick={(e) => handleLinkClick(e, 'home')}
+                    className="flex items-center gap-1.5 text-sm text-gray-600 hover:text-[#CE1126] transition-colors duration-200"
+                    style={{ letterSpacing: '0.1px' }}
+                  >
+                    <Home className="h-3.5 w-3.5 text-[#CE1126]" />
+                    <span>Home</span>
+                  </a>
+                </li>
               <li>
                 <a
                   href="#about"
                   onClick={(e) => handleLinkClick(e, 'about')}
-                  className="text-sm text-gray-600 hover:text-[#CE1126] transition-colors duration-200"
+                  className="flex items-center gap-1.5 text-sm text-gray-600 hover:text-[#CE1126] transition-colors duration-200"
                   style={{ letterSpacing: '0.1px' }}
                 >
-                  About RehabServE
+                  <Info className="h-3.5 w-3.5 text-[#CE1126]" />
+                  <span>About RehabServE</span>
                 </a>
               </li>
               <li>
                 <a
                   href="#contact"
                   onClick={(e) => handleLinkClick(e, 'contact')}
-                  className="text-sm text-gray-600 hover:text-[#CE1126] transition-colors duration-200"
+                  className="flex items-center gap-1.5 text-sm text-gray-600 hover:text-[#CE1126] transition-colors duration-200"
                   style={{ letterSpacing: '0.1px' }}
                 >
+                  <Contact className="h-3.5 w-3.5 text-[#CE1126]" />
                   Contact Support
                 </a>
               </li>
@@ -113,7 +116,7 @@ const Footer: React.FC<FooterProps> = ({ onNavClick, withSidebarMargin = false }
                   <div>
                     <p className="font-medium mb-1">Mail</p>
                     <p className="text-xs" style={{ lineHeight: '1.5' }}>
-                      rehabsere.care@gmail.com<br />
+                      rehabserve.care@gmail.com<br />
                       vooboonho@gmail.com
                     </p>
                   </div>
