@@ -337,7 +337,7 @@ const LandingPage: React.FC<LandingPageProps> = ({ onAccessGranted }) => {
                 }}>
                   Admin access available with administrator credentials
                 </p>
-              </div>
+              </div>}
             </div>
 
             {/* Footer Note */}
@@ -358,5 +358,3 @@ const LandingPage: React.FC<LandingPageProps> = ({ onAccessGranted }) => {
 };
 
 export default LandingPage;
-
-.
