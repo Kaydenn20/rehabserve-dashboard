@@ -181,3 +181,5 @@ const Footer: React.FC<FooterProps> = ({ onNavClick, withSidebarMargin = false }
 };
 
 export default Footer;
+
+

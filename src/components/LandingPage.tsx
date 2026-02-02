@@ -335,9 +335,9 @@ const LandingPage: React.FC<LandingPageProps> = ({ onAccessGranted }) => {
                 <p className="text-xs text-center text-gray-500" style={{
                   letterSpacing: '0.1px'
                 }}>
-                  Admin access available with administrator credentials
+                  Admin access available with administrator 
                 </p>
-              </div>}
+              </div>
             </div>
 
             {/* Footer Note */}
