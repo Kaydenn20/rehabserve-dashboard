@@ -66,6 +66,24 @@ Google Sheet (gviz/tq JSON) → fetched by `fetchSheetData()` → parsed in `App
 
 ## 5. Interface & Controls (labels used in the app)
 
+### 5.1 Dashboard Sidebar and Sections
+
+The sidebar is the main navigation within the Dashboard. It appears on the left (fixed on desktop, slide-out on mobile) and lists five sections that switch the main content area.
+
+**Sidebar behaviour**
+- Desktop (≥1024px): Sidebar is always visible.
+- Mobile (<1024px): Sidebar is hidden; tap the menu button (top-left) to open it as an overlay. Selecting a section closes it.
+- Active section: Highlighted with a red left border and chevron.
+- Filtering: All sections respect the PDK selector and respondent group filter in the header.
+
+| Section | Icon | Purpose | Content |
+|---------|------|---------|---------|
+| **Dashboard Overview** | Layout dashboard | High-level summary | KPIs (Index, best dimension, respondents), Respondent Groups donut, Dimension breakdown, AI Insights |
+| **Dimensions Analysis** | Bar chart | Dimension-level view | Horizontal bar, Radar chart, Gauge chart, Funnel (top/bottom dimensions) |
+| **Scorecard** | File text | Question-level report | Question table (38 questions), Download PDF |
+| **Respondent Analysis** | Users | Group comparison | Stacked bar by group, Respondent distribution donut |
+| **Health Outcomes** | Heart | Trainee health analytics | AI-powered health outcome chart |
+
 - Main navigation: **Dashboard**, **About RehabServE**, **Contact Support**.  
 - Floating chatbot quick buttons (bottom-left):  
   - Performance snapshot  

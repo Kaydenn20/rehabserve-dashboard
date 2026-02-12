@@ -10,7 +10,7 @@ const AboutUs: React.FC = () => {
   const teamMembers = [
     {
       id: 1,
-      name: 'PROF.DR. VOON BOO HO',
+      name: 'PROF. DR. VOON BOO HO',
       role: 'Researcher',
       description: 'Fakulti Pengurusan Perniagaan, UiTM Sarawak',
       image: profVoon, // Placeholder - replace with actual image
@@ -19,7 +19,7 @@ const AboutUs: React.FC = () => {
     },
     {
       id: 2,
-      name: 'DR AZLINA BUJANG',
+      name: 'DR. AZLINA BUJANG',
       role: 'Researcher',
       description: 'Fakulti Sains Komputer dan Matematik, UiTM Sarawak',
       image: drAzlina,

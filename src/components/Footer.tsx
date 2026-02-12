@@ -128,23 +128,12 @@ const Footer: React.FC<FooterProps> = ({ onNavClick, withSidebarMargin = false }
                   <div>
                     <p className="font-medium mb-1">Phone</p>
                     <p className="text-xs" style={{ lineHeight: '1.5' }}>
-                      01127705942
+                      <p>019-4390228 (Voon)</p>
+                      <p>013-8118387 (Azlina)</p>
                     </p>
                   </div>
                 </div>
                </li>   
-              <li>
-                <div className="flex items-start gap-2 text-sm text-gray-600">
-                  <Clock className="h-3.5 w-3.5 flex-shrink-0 mt-0.5 text-[#CE1126]" />
-                  <div>
-                    <p className="font-medium mb-1">Operating Hours</p>
-                    <p className="text-xs" style={{ lineHeight: '1.5' }}>
-                      Monday - Friday: 8:00 AM - 5:00 PM<br />
-                      Saturday - Sunday: Closed
-                    </p>
-                  </div>
-                </div>
-              </li>
               <li className="pt-2">
                 <p className="text-xs text-gray-500 leading-relaxed" style={{
                   lineHeight: '1.5',

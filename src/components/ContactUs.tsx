@@ -148,26 +148,8 @@ const ContactUs: React.FC = () => {
                       lineHeight: '1.5',
                       letterSpacing: '0.1px'
                     }}>
-                      01127705942
-                    </div>
-                  </div>
-                </div>
-
-                {/* Operating Hours */}
-                <div className="flex items-start gap-3">
-                  <div className="p-2 bg-[#4CAF50]/10 rounded-lg flex-shrink-0">
-                    <Clock className="h-5 w-5 text-[#4CAF50]" />
-                  </div>
-                  <div>
-                    <h3 className="text-sm font-semibold text-gray-900 mb-1" style={{ letterSpacing: '0.1px' }}>
-                      Operating Hours
-                    </h3>
-                    <div className="text-sm text-gray-600 space-y-1" style={{
-                      lineHeight: '1.5',
-                      letterSpacing: '0.1px'
-                    }}>
-                      <p>Monday - Friday: 8:00 AM - 5:00 PM</p>
-                      <p>Saturday - Sunday: Closed</p>
+                      <p>019-4390228 (Voon)</p>
+                      <p>013-8118387 (Azlina)</p>
                     </div>
                   </div>
                 </div>
